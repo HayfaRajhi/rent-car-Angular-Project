@@ -30,8 +30,7 @@
     <div class="col-sm-10">
 <!--<div class="container d-flex align-items-center justify-content-center">--> 
 
-<div class="card border-dark mb-3 rounded">
- <!--- <div><button  class="btn btn-secondary mb-3 " (click)="onAddCustomer()">add Contact</button></div>-->
+<div class="card border mb-3 rounded">
   <div class="card-header bg-warning text-white  d-flex justify-content-center align-items-center">
     
     <h3>Customers  list</h3><!--I added the d-flex class to make the header a flex container.
@@ -63,7 +62,7 @@
         <th scope="row">{{c.id}}</th>
         <td>
             <div class="d-flex align-items-center">
-            <img src="{{c.image}}" alt="Customer Photo" class="mr-2" style="width: 40px; height: 40px; border-radius: 50%;">
+            <img src="{{BaseURL+c.image}}" alt="Customer Photo" class="mr-2" style="width: 40px; height: 40px; border-radius: 50%;">
             <strong>{{c.name}}</strong>
           </div></td>
         <td>{{c.email}}</td>
@@ -72,7 +71,9 @@
         <td>@mdo</td>
         <td>@mdo</td>
         <td><a class="btn btn-success  mr-3 "  routerLink="/customers/{{c.id}}" >Detail</a>  <!--routerLink="/contacts/{{c.id}}"-->
-        <a class="btn btn-danger  ml-3 " (click) ="onDelete(c.id)">Delete</a></td> <!-- (click)="onDelete(c.id)"-->
+       
+       <a class="btn btn-warning" routerLink="/customers/edit/{{c.id}}">Edit</a>
+          <a class="btn btn-danger  ml-3 " (click) ="onDelete(c.id)">Delete</a></td> <!-- (click)="onDelete(c.id)"-->
       </tr>
 
     </tbody>
@@ -83,7 +84,8 @@
   </div>
   </div>
 
-  
+  <div><button  class="btn btn-secondary mb-3 " (click)="onAddCustomer()">add Customer</button></div>
+
  <!-- </div>--> 
   </div>
   

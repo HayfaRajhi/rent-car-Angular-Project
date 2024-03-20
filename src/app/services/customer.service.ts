@@ -1,31 +1,55 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Customer } from '../shared/models/customer';
 import { CUSTOMERS } from '../shared/models/cutomers';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
+
+
   customers :Customer[]= CUSTOMERS
 
-  constructor() { }
+  httpOptions= {
+    headers: new HttpHeaders({
 
-  getCustomers():Customer[]{
-    return this.customers
+      'content-Type': 'application/json'
+    })
+  };
+  constructor(private httpClient :HttpClient,@Inject('BaseURL') private baseURL) { }
+
+
+  updateCustomer(id: number,customer: Customer) :Observable<Customer>{
+
+    return this.httpClient.put<Customer>(this.baseURL+"customers/"+id,customer,this.httpOptions);
+  }
+  getCustomers():Observable<Customer[]>{
+    return this.httpClient.get<Customer[]>(this.baseURL+"customers/")
   }
 
-  deleteCustomerById(id:number):Customer[]{
-    let index=this.customers.findIndex(customer =>customer.id==id)
-    return this.customers.splice(index,1)
+  deleteCustomerById(id:number):Observable<any>{
+   // let index=this.customers.findIndex(customer =>customer.id==id)
+    //return this.customers.splice(index,1)
+    return this.httpClient.delete<any>(this.baseURL+"customers/"+id);
   }
 
+  getCustomerById(id:number):Observable<Customer>{
+   // return this.customers.find(customer=>customer.id==id);
+   return this.httpClient.get<Customer>(this.baseURL+"customers/"+id);
+
+  }
+
+  /*
   addCustomer(customer:Customer):void{
     customer.id=this.customers[this.customers.length-1].id+1;
     this.customers.push(customer)
-  }
+  }*/
+  addCustomer(customer:Customer):Observable<Customer>{
 
-  getCustomerById(id:number):Customer{
-    return this.customers.find(customer=>customer.id==id);
+    return this.httpClient.post<Customer>(this.baseURL+"customers/",customer,this.httpOptions);
+
   }
 
 }

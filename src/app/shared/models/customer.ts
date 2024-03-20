@@ -4,6 +4,8 @@ export class Customer {
     email:string;
     phone :number;
     image:string;
+    birthay:String;
+    licenceNumber:number
 
     /*
     id ?: number;
