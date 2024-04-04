@@ -1,0 +1,5 @@
+.fixed-size {
+    height: 200px; /* Set your desired fixed height here */
+    object-fit: cover; /* Ensure the image covers the entire container */
+  }
+  

@@ -1,9 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import jsPDF from 'jspdf';
 import { CustomerService } from 'src/app/services/customer.service';
-import { BaseURL } from 'src/app/shared/baseUrl';
 import { Customer } from 'src/app/shared/models/customer';
-
 @Component({
   selector: 'app-customers-list',
   templateUrl: './customers-list.component.html',
@@ -36,6 +35,9 @@ export class CustomersListComponent implements OnInit{
 
 
 
+
+
+ 
 
 
 

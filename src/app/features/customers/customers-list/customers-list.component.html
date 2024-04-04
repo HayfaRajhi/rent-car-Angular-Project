@@ -1,91 +1,109 @@
-<div class="container-fluid bg-secondary">
-    <div class="card border-light mb-5">
+<!--<div class="container-fluid bg-secondary" id="content" #content>-->
+  <div class="container-fluid mt-4 "  >
 
-    </div>
+<div class="row">
 
-    <div class="row">
-
-      <!-- Card Section - Takes up 4 columns on small and larger screens -->
-      <div class="col-sm-2 ">
-        <!-- Content for the card goes here -->
+    <!-- Card Section - Takes up 4 columns on small and larger screens -->
+  <!--<div class="col-sm-6">
+      -- Content for the card goes here --
         <div class="card mb-4 rounded">
-          <div class="card-body">
-            <h5 class="card-title">Total Number of Customers</h5>
-            <p class="card-text"> 500</p>
-          </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">Total Number of Customers</h5>
+                <p class="card-text fs-4 fw-bold text-primary">500</p>
+                <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>+0.1%</span></p>
+            </div>
         </div>
-      
-         <!-- Another Card Under the First Card -->
-      <div class="card  rounded">
+    </div>
+    <div class="col-sm-6">
+
+       Another Card Under the First Card 
+      <div class="card mb-4 rounded">
         <div class="card-body">
           <h5 class="card-title">Card Title 2</h5>
           <p class="card-text">Some content for the second card.</p>
+          
+          <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>68.8</span></p>       
+          <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>-0.5%</span></p>
+        
+        </div>
+      </div>
+    </div>-->
+
+      <div class="col-md-9 mb-3">
+        <input type="text" class="form-control" placeholder="Search Customer"><!-- [(ngModel)]="" (ngModelChange)="onFilterChange()">-->
+      </div>
+      
+      <!-- Button -->
+      <div class="col-md-3 mb-3">
+        <button class="btn btn-md bg-marin text-white float-right" (click)="onAddCustomer()">Add a new  Customer</button>
+      </div>
+
+</div>
+  <div class="row">
+
+    <!-- Table Section - Takes up 8 columns on small and larger screens -->
+    <div class="col-sm-12">
+      <!--<div class="container d-flex align-items-center justify-content-center">-->
+
+      <div class="card border mb-3 border-radius">
+        <div class="card-header bg-marin text-white  d-flex justify-content-center align-items-center">
+
+          <h3>Customers list</h3><!--I added the d-flex class to make the header a flex container.
+      I used justify-content-between to push the heading to the left and the button to the right.
+      The align-items-center class is used to vertically align the content in the center.-->
+          <!-- <button  class="btn btn-old-gold mb-2 " (click)="onAddCustomer()">add Contact</button>-->
+
+        </div>
+        <div class="card-body">
+
+
+          <div class="table-responsive">
+
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name </th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">licenseNumber</th>
+                  <th scope="col">end of Validity</th>
+                  <th scope="col">status</th>
+                  <th scope="col" class="text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let c of customers ">
+                  <th scope="row">{{c.id}}</th>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <img src="{{BaseURL+c.image}}" alt="Customer Photo" class="mr-2"
+                        style="width: 40px; height: 40px; border-radius: 50%;">
+                      <strong>{{c.name}}</strong>
+                    </div>
+                  </td>
+                  <td>{{c.email}}</td>
+                  <td>{{c.phone}}</td>
+                  <td>{{c.licenceNumber}}</td>
+                  <td>15-01-xxxx</td>
+                  <td>@mdo</td>
+                  <td>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <a class="btn btn-primary btn-sm mr-1" routerLink="/customers/{{c.id}}">Detail</a>
+                      <a class="btn btn-success btn-sm mr-1" routerLink="/customers/edit/{{c.id}}">Edit</a>
+                      <a class="btn btn-danger btn-sm" (click)="onDelete(c.id)">Delete</a>
+                    </div>
+                  </td><!-- (click)="onDelete(c.id)"-->
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-    
-      
-
-       <!-- Table Section - Takes up 8 columns on small and larger screens -->
-    <div class="col-sm-10">
-<!--<div class="container d-flex align-items-center justify-content-center">--> 
-
-<div class="card border mb-3 rounded">
-  <div class="card-header bg-warning text-white  d-flex justify-content-center align-items-center">
-    
-    <h3>Customers  list</h3><!--I added the d-flex class to make the header a flex container.
-      I used justify-content-between to push the heading to the left and the button to the right.
-      The align-items-center class is used to vertically align the content in the center.-->
-    <!-- <button  class="btn btn-old-gold mb-2 " (click)="onAddCustomer()">add Contact</button>--> 
-
-    </div>
-    <div class="card-body">
-
-            
-<div class="table-responsive">
-
-<table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name </th>
-        <th scope="col">Email</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Adress</th>
-        <th scope="col">Zip</th>
-        <th scope="col">Country</th>
-        <th scope="col" class="text-center">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let c of customers " >
-        <th scope="row">{{c.id}}</th>
-        <td>
-            <div class="d-flex align-items-center">
-            <img src="{{BaseURL+c.image}}" alt="Customer Photo" class="mr-2" style="width: 40px; height: 40px; border-radius: 50%;">
-            <strong>{{c.name}}</strong>
-          </div></td>
-        <td>{{c.email}}</td>
-        <td>{{c.phone}}</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td><a class="btn btn-success  mr-3 "  routerLink="/customers/{{c.id}}" >Detail</a>  <!--routerLink="/contacts/{{c.id}}"-->
-       
-       <a class="btn btn-warning" routerLink="/customers/edit/{{c.id}}">Edit</a>
-          <a class="btn btn-danger  ml-3 " (click) ="onDelete(c.id)">Delete</a></td> <!-- (click)="onDelete(c.id)"-->
-      </tr>
-
-    </tbody>
-  </table>
-  </div>
-  </div>
-  </div>
-  </div>
   </div>
 
-  <div><button  class="btn btn-secondary mb-3 " (click)="onAddCustomer()">add Customer</button></div>
 
- <!-- </div>--> 
-  </div>
-  
+  <!-- </div>-->
+</div>

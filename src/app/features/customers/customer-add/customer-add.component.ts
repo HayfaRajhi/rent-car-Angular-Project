@@ -5,6 +5,7 @@ import { CustomerService } from 'src/app/services/customer.service';
 import { Customer } from 'src/app/shared/models/customer';
 
 @Component({
+
   selector: 'app-customer-add',
   templateUrl: './customer-add.component.html',
   styleUrls: ['./customer-add.component.css']
@@ -12,10 +13,13 @@ import { Customer } from 'src/app/shared/models/customer';
 export class CustomerAddComponent implements OnInit{
 
   customerForm:FormGroup;
-  customers:Customer[];
 
-  customer: Customer={id:null,name:"test",email:"",birthay:"",licenceNumber:null,phone:null,image:"../../../assets/default-avatar.jpg"};
-  constructor(private formBuilder:FormBuilder,private router :Router,private customerService:CustomerService,private route:ActivatedRoute){}
+  customers:Customer[];
+  customer: Customer={id:null,name:"test",email:"",birthay:"",licenceNumber:null,phone:null,image:"./images/default-avatar.jpg"};
+  constructor(private formBuilder:FormBuilder,
+              private router :Router,
+              private customerService:CustomerService,
+              private route:ActivatedRoute){}
 
   ngOnInit(): void {
     this.initForm();
@@ -36,29 +40,38 @@ export class CustomerAddComponent implements OnInit{
     this.customerService.getCustomerById(id).subscribe(customer=>{
       this.customer=customer;
       this.customerForm.patchValue(customer);
+      
       console.log(this.customer);
    });
   }
 
   onSubmit(){
     if (this.customer.id == null){
-      this.customerService.addCustomer(this.customer).subscribe(
+
+      this.customerService.addCustomer(this.customerForm.value).subscribe(
         customer => {
-          this.router.navigate(['/customers'])
+          console.log('Successfully added new customer', customer);
+
+          this.router.navigate(['/customers/'+customer.id]);
         }
       );
     }
     else {
 
-      this.customerService.updateCustomer(this.customer.id,this.customerForm.value).subscribe(
+      this.customerService
+      .updateCustomer(this.customer.id,this.customerForm.value)
+      .subscribe(
         customer => {
           console.log({customer});
+          console.log('Successfully updated new customer', customer);
+
           
           this.router.navigate(['/customers/'+customer.id])
         }
       );
     }
   }
+  
 
 
 
@@ -84,7 +97,9 @@ export class CustomerAddComponent implements OnInit{
       phone: ['', [Validators.required, this.tunisianPhoneNumber]] ,// Add custom validator for Tunisian phone number
       licenseNumber: ['', Validators.required],
       startValidity: ['', Validators.required],
-      endValidity: ['', Validators.required]
+      endValidity: ['', Validators.required],
+      image: ['', Validators.required]
+
       }
     )
   }
@@ -93,10 +108,11 @@ onCustomers(){
 }
 
 onAddCustomer():void{
+  this.onSubmit();
   
-   console.log(this.customerForm.value);
+   //console.log(this.customerForm.value);
 
-    this.router.navigateByUrl("/customers");
+    //this.router.navigateByUrl("/customers");
 
     };
   

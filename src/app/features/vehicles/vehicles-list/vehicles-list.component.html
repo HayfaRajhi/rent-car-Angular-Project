@@ -1,0 +1,45 @@
+<div class="container mt-4">
+
+      <div class="row">
+
+    <div class="col-md-9 mb-3">
+      <input type="text" class="form-control" placeholder="Search vehicles" [(ngModel)]="searchQuery" (ngModelChange)="onFilterChange()">
+    </div>
+    
+    <!-- Button -->
+    <div class="col-md-3 mb-3">
+      <button class="btn btn-md btn-primary float-right" (click)="onAdd()">Add a new  Vehicle</button>
+    </div>
+  </div>
+  <div class="row">
+   <!-- <div *ngFor="let c of vehicles$ | async " class="col-md-4 mb-4">-->
+    <div *ngFor ="let c of filteredVehicles" class="col-md-4 mb-4">
+    <div class="card h-100">
+        <img class="card-img-top img-fluid fixed-size" src="{{ baseURL + c.images[0] }}" alt="{{ c.model }}"> <!--fixed-size--->
+        <div class="card-body">
+          <h5 class="card-title">{{ c.model }}</h5>
+          <p class="card-text">{{ c.brand }}</p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Registration:</strong> {{ c.registration }}</li>
+            <li class="list-group-item"><strong>Date Of Registration :</strong> {{ c.dateOfRegistration }}</li>
+            <li class="list-group-item "> <strong >Price per day: ${{ c.pricePerDay }}</strong></li>
+            <li class="list-group-item "> <strong >Status:</strong> {{ c.status }}</li>
+          </ul>
+        </div>
+        <!--<div class="card-footer bg-transparent border-top-0">-->
+          <div class="card-footer">
+         <!-- <small class="text-muted">Price per day: ${{ c.pricePerDay }}</small>-->
+          <div class="mt-2">
+            <button class="btn btn-primary btn-sm  mr-2" (click)="viewVehicleDetail(c.id)">Details</button>
+            <button class="btn btn-danger btn-sm " (click)="onDelete(c.id)">Delete</button>
+          </div>
+        <!--<div class="card-footer d-flex justify-content-between">
+          <button class="btn btn-primary" (click)="showDetails(c)">Detail</button>
+          <button class="btn btn-danger" (click)="confirmDelete(c)">Delete</button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

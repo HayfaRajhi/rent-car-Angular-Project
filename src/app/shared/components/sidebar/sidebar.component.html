@@ -1,0 +1,56 @@
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar">
+    <div class="sidebar-sticky pt-4">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" routerLink="/dashboard">
+                    <span class="icon" data-feather="home"></span>
+                    <span class="ml-2">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#clientsMenu" aria-expanded="false" aria-controls="clientsMenu">
+                    <span class="icon" data-feather="file"></span>
+                    <span class="ml-2">Clients Management</span>
+                </a>
+                <ul class="nav flex-column pl-4 collapse" id="clientsMenu">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/customers/edit/-1">Add Client</a>
+                    </li>
+                    <!-- Add links for other CRUD operations -->
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#carsMenu" aria-expanded="false" aria-controls="carsMenu">
+                    <span class="icon" data-feather="shopping-cart"></span>
+                    <span class="ml-2">Car Management</span>
+                </a>
+                <ul class="nav flex-column pl-4 collapse" id="carsMenu">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/cars/add">Add Car</a>
+                    </li>
+                    <!-- Add links for other CRUD operations -->
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#locationsMenu" aria-expanded="false" aria-controls="locationsMenu">
+                    <span class="icon" data-feather="users"></span>
+                    <span class="ml-2">Location Management</span>
+                </a>
+                <ul class="nav flex-column pl-4 collapse" id="locationsMenu">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/locations/add">Add Location</a>
+                    </li>
+                    <!-- Add links for other CRUD operations -->
+                </ul>
+            </li>
+        </ul>
+        <!-- Saved Reports -->
+        <!-- Include saved reports section as before -->
+    </div>
+</nav>
+<script src="../../../../../node_modules/feather-icons/dist/feather.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        feather.replace();
+    });
+</script>

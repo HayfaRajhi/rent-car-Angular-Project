@@ -1,0 +1,12 @@
+.nav-item {
+    padding: 10px 15px;
+  }
+  
+  .nav-link {
+    color: #ffffff; /* Text color */
+  }
+  
+  .nav-link:hover {
+    background-color: #343a40; /* Background color on hover */
+  }
+  

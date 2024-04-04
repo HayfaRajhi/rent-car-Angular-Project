@@ -9,6 +9,9 @@ import { Customer } from 'src/app/shared/models/customer';
   styleUrls: ['./customer-detail.component.css']
 })
 export class CustomerDetailComponent implements OnInit {
+onCustomers() {
+  return this.router.navigateByUrl('/customers')
+}
 onDelete(arg0: number) {
 throw new Error('Method not implemented.');
 }

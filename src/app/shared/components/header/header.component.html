@@ -35,11 +35,11 @@
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">  <!-- this is how i deplaced  all nav items to the right-->
-        <li class="nav-item active">
+        <li class="nav-item ">
           <a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Cars management</a>
+          <a class="nav-link" routerLink="/vehicles" outerLinkActive="active">Cars management</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" routerLink="/customers" outerLinkActive="active">Clients management</a>
@@ -49,7 +49,7 @@
             Export
           </a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Export</a>
+            <a class="dropdown-item" value="Download PDF"   href="#">Export</a>
             <a class="dropdown-item" href="#">Share Details</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Something else here</a>

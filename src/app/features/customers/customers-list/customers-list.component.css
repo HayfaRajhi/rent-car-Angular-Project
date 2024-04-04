@@ -7,3 +7,14 @@
     background-color: #FFDB58; /* Mustard color */
     color: #fff; /* Text color (white in this example, adjust as needed) */
   }
+
+  .bg-blue{
+    background-color: #52CDFF;
+  }
+
+  .bg-marin{
+    background-color:#1F3BB3;
+  }
+  .btn-terk{
+    background-color:#a7142d;
+  }
