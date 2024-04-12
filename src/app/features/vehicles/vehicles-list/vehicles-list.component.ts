@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { VehicleService } from 'src/app/services/vehicle.service';
+import { VehicleService } from 'src/app/services/vehicule/vehicle.service';
 import { Vehicle } from 'src/app/shared/models/vehicle';
 import { Observable } from 'rxjs';
 
@@ -22,7 +22,7 @@ export class VehiclesListComponent implements OnInit {
   defaultImageUrl = '../../../assets/default-avatar.jpg'; // Provide the path to your default image here
 
 
-  constructor(private router: Router, 
+  constructor(private router: Router,
     private vehicleService: VehicleService,
      @Inject("BaseURL") public baseURL) { }
 
@@ -33,7 +33,7 @@ export class VehiclesListComponent implements OnInit {
       console.log(vehicles)
       this.isWaiting=false;
       this.applyFilter(); // Apply filter when vehicles are loaded
-    
+
 
   },
   error:(errmess)=>{this.vehicles=[];
@@ -49,7 +49,7 @@ onFilterChange() {
 }
 
 
-  
+
 
   applyFilter() {
     if (this.searchQuery.trim() === '') {

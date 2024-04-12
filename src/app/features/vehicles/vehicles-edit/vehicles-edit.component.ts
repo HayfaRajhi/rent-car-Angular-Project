@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { VehicleService } from 'src/app/services/vehicle.service';
+import { VehicleService } from 'src/app/services/vehicule/vehicle.service';
 import { Vehicle } from 'src/app/shared/models/vehicle';
 
 @Component({
@@ -47,8 +47,8 @@ export class VehiclesEditComponent {
            this.editing = false;
              console.log({vehicle});
              console.log('Successfully updated new vehicle', vehicle);
-   
-             
+
+
            // Optionally, you can navigate to a different route or show a success message
          }, error => {
            console.error('Error updating vehicle:', error);
@@ -77,7 +77,7 @@ export class VehiclesEditComponent {
         let id =parseInt(result.get('id'));
       });
       if (!isNaN(this.id)) {
-   
+
        this.vehicleService.getVehicleById(this.id)
        .subscribe(vehicle=> {this.vehicle=vehicle;})
      }}*/

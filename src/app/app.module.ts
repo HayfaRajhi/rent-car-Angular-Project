@@ -9,7 +9,7 @@ import { CustomersListComponent } from './features/customers/customers-list/cust
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomerAddComponent } from './features/customers/customer-add/customer-add.component';
 import {HttpClientModule } from '@angular/common/http'
-import { CustomerService } from './services/customer.service';
+import { CustomerService } from './services/customer/customer.service';
 import { BaseURL } from './shared/baseUrl';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { VehicleAddComponent } from './features/vehicles/vehicle-add/vehicle-add.component';

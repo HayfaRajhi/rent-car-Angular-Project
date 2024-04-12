@@ -1,8 +1,8 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import jsPDF from 'jspdf';
-import { CustomerService } from 'src/app/services/customer.service';
-import { UserService } from 'src/app/services/user.service';
+import { CustomerService } from 'src/app/services/customer/customer.service';
+import { UserService } from 'src/app/services/user/user.service';
 import { Customer } from 'src/app/shared/models/customer';
 @Component({
   selector: 'app-customers-list',
@@ -33,22 +33,22 @@ export class CustomersListComponent implements OnInit{
         }
       }
     });
-  
+
     this.customerService.getAllCustomers().subscribe
     ({next:(customers)  =>{this.customers=customers,this.isWaiting=false;
       customers.forEach(element => {
         console.log(element.licence_number)
-        
+
       });
     },
     error:(errmess)=>{this.customers=[];
       this.errMess=<any>errmess;this.isWaiting=false;},
       complete:()=> {console.log("complete "+this.isWaiting);}});
-      
+
 
     }
 
-    
+
  /*   console.log('Customers:', this.customers); // Log the fetched customers  for debugging
   },
   error => {
@@ -97,7 +97,7 @@ export class CustomersListComponent implements OnInit{
 
 
 
- 
+
 
 
 

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CustomerService } from 'src/app/services/customer.service';
-import { LocationService } from 'src/app/services/location.service';
-import { VehicleService } from 'src/app/services/vehicle.service';
+import { CustomerService } from 'src/app/services/customer/customer.service';
+import { LocationService } from 'src/app/services/location/location.service';
+import { VehicleService } from 'src/app/services/vehicule/vehicle.service';
 import { Customer } from 'src/app/shared/models/customer';
 import { RentalLocation } from 'src/app/shared/models/location';
 import { Vehicle } from 'src/app/shared/models/vehicle';
@@ -47,7 +47,7 @@ vehicles: Vehicle[];
     private router :Router,
     private route :ActivatedRoute) { }
 
-  
+
     ngOnInit(): void {
       this.fetchCustomers();
       this.fetchVehicles();
@@ -69,16 +69,16 @@ vehicles: Vehicle[];
       console.log(startDate)
       // Add one day to start date
       startDateObj.setDate(startDateObj.getDate() + 1);
-    
+
       // Convert the date to the yyyy-mm-dd format
       const minEndYear = startDateObj.getFullYear();
       const minEndMonth = ('0' + (startDateObj.getMonth() + 1)).slice(-2); // Add leading zero if necessary
       const minEndDay = ('0' + startDateObj.getDate()).slice(-2); // Add leading zero if necessary
       this.minEndDate = `${minEndYear}-${minEndMonth}-${minEndDay}`;
     }
-    
-    
- 
+
+
+
     private initializeForm(): void {
       this.locationForm = this.formBuilder.group({
         customer: [null, Validators.required], // Assuming customer is a form control for the Customer object
@@ -127,22 +127,22 @@ this.locationForm.get('startDate').valueChanges.subscribe(() => {
       this.locationForm.get('startDate').valueChanges.subscribe(() => this.calculateTotalPrice());
       this.locationForm.get('endDate').valueChanges.subscribe(() => this.calculateTotalPrice());
       this.locationForm.get('pricePerDay').valueChanges.subscribe(() => this.calculateTotalPrice());
-    
-    
+
+
     }
-  
+
     private fetchCustomers(): void {
       this.customerService.getAllCustomers().subscribe(customers => {
         this.customers = customers;
       });
     }
-  
+
     private fetchVehicles(): void {
       this.vehicleService.getAllVehicles().subscribe(vehicles => {
         this.vehicles = vehicles;
       });
     }
-  
+
      private initLocation(id){
       this.locationService.getLocationById(id).subscribe(location=>{
         this.location=location;

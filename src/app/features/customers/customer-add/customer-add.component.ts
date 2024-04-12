@@ -2,7 +2,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CustomerService } from 'src/app/services/customer.service';
+import { CustomerService } from 'src/app/services/customer/customer.service';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { Customer } from 'src/app/shared/models/customer';
 
@@ -39,7 +39,7 @@ export class CustomerAddComponent implements OnInit{
    currentFile?: File;
    progress = 0;
    message = '';
- 
+
   initCustomer(id){
     /*let customer:Customer={
       id:id,
@@ -52,7 +52,7 @@ export class CustomerAddComponent implements OnInit{
     this.customerService.getCustomerById(id).subscribe(customer=>{
       this.customer=customer;
       this.customerForm.patchValue(customer);
-      
+
       console.log(this.customer);
    });
   }
@@ -78,13 +78,13 @@ console.log("heu")
           console.log({customer});
           console.log('Successfully updated new customer', customer);
 
-          
+
           this.router.navigate(['/customers/'+customer.id])
         }
       );
     }
   }
-  
+
 
 
 
@@ -122,7 +122,7 @@ onCustomers(){
 
 onAddCustomer():void{
   this.onSubmit();
-  
+
    //console.log(this.customerForm.value);
 
     //this.router.navigateByUrl("/customers");
@@ -134,7 +134,7 @@ onAddCustomer():void{
   }
 
   upload(id: number): void {
-    
+
     this.progress = 0;
 
     if (this.selectedFiles) {
@@ -144,9 +144,9 @@ onAddCustomer():void{
         this.currentFile = file;
 
         this.fileUploadService.upload(this.currentFile,id,"Customer").subscribe({
-          next: (event: any) => {  
+          next: (event: any) => {
             if (event.type === HttpEventType.UploadProgress) {
-              this.progress = Math.round(100 * event.loaded / event.total); 
+              this.progress = Math.round(100 * event.loaded / event.total);
             } else if (event instanceof HttpResponse) {
               this.message = event.body.message;
               this.router.navigateByUrl('/customers/' +id);

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from './services/auth.service';
-import { StorageService } from './services/storage.service';
+import { AuthService } from './services/auth/auth.service';
+import { StorageService } from './services/storage/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -29,8 +29,8 @@ export class AppComponent {
 
       this.username = user.username;
     }
-  } 
-  /* 
+  }
+  /*
   logout(): void {
     this.authService.logout().subscribe({
       next: res => {
@@ -45,15 +45,15 @@ export class AppComponent {
     });
   }*/
 
-  
-  
+
+
   /*ngOnInit(): void {
     console.log(this.isSidebarOpen)
 
       this.authService.authSubject.subscribe(
         (isAuth:boolean)=>{this.isAuth=isAuth;}
-        
-      */     
+
+      */
 
 title = 'rent-car-project';
 isSidebarOpen = false;

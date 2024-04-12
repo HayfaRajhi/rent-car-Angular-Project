@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocationService } from 'src/app/services/location.service';
+import { LocationService } from 'src/app/services/location/location.service';
 import { RentalLocation } from 'src/app/shared/models/location';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomerDetailComponent } from '../../customers/customer-detail/customer-detail.component';

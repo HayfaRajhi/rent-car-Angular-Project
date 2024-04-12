@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { StorageService } from 'src/app/services/storage.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-signin',
@@ -9,9 +9,9 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 
 /*
-Login Component also uses AuthService 
-to work with Observable object. 
-Besides that, it calls StorageService methods 
+Login Component also uses AuthService
+to work with Observable object.
+Besides that, it calls StorageService methods
 to check loggedIn status and save User info
  to Session Storage.
 */
@@ -62,7 +62,7 @@ export class SigninComponent implements OnInit {
 /*
   constructor(private authService: AuthService){}
 
-   isAuth:boolean=false; 
+   isAuth:boolean=false;
 
 ngOnInit(): void {
       this.isAuth=this.authService.isAuth;
