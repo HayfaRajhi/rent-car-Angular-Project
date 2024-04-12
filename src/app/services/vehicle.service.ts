@@ -17,7 +17,7 @@ export class VehicleService {
   constructor(private http: HttpClient,@Inject('BaseURL') private baseUrl) { }
 
   getAllVehicles(): Observable<Vehicle[]> {
-    return this.http.get<Vehicle[]>(this.baseUrl+"vehicles/");
+    return this.http.get<Vehicle[]>(this.baseUrl+"vehicles");
   }
 
   getVehicleById(id: number): Observable<Vehicle> {
@@ -25,12 +25,12 @@ export class VehicleService {
   }
 
   createVehicle(vehicle: Vehicle): Observable<Vehicle> {
-    return this.http.post<Vehicle>(this.baseUrl+"vehicles/", vehicle);
+    return this.http.post<Vehicle>(this.baseUrl+"vehicles/edit/"+vehicle.id, vehicle,this.httpOptions);
   }
 
   updateVehicle(id:number,vehicle: Vehicle): Observable<Vehicle> {
     //return this.http.put<Vehicle>(`${this.baseUrl}/${vehicle.id}`, vehicle);
-    return this.http.put<Vehicle>(this.baseUrl+"vehicles/"+id,vehicle,this.httpOptions);
+    return this.http.put<Vehicle>(this.baseUrl+"vehicles/edit/"+id,vehicle,this.httpOptions);
 
   }
 

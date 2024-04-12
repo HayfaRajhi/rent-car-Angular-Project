@@ -10,15 +10,17 @@ import { Observable } from 'rxjs';
   styleUrls: ['./vehicles-list.component.css']
 })
 export class VehiclesListComponent implements OnInit {
-onFilterChange() {
-  console.log('Filter text:', this.searchQuery);
-  this.applyFilter()
-}
+
+  errMess:string;
+  isWaiting:boolean=true;
 
   vehicles$: Observable<Vehicle[]>;
   vehicles: Vehicle[] = [];
   filteredVehicles: Vehicle[] = [];
   searchQuery: string = '';
+
+  defaultImageUrl = '../../../assets/default-avatar.jpg'; // Provide the path to your default image here
+
 
   constructor(private router: Router, 
     private vehicleService: VehicleService,
@@ -26,14 +28,26 @@ onFilterChange() {
 
   ngOnInit(): void {
     this.vehicles$ = this.vehicleService.getAllVehicles();
-    this.vehicleService.getAllVehicles().subscribe(res => {
-      this.vehicles = res;
+    this.vehicleService.getAllVehicles().subscribe({next:(vehicles) => {
+      this.vehicles = vehicles;
+      console.log(vehicles)
+      this.isWaiting=false;
       this.applyFilter(); // Apply filter when vehicles are loaded
-    }),
-    (error) => {
-      console.log('Error fetching vehicles:', error);
-    };
+    
+
+  },
+  error:(errmess)=>{this.vehicles=[];
+    this.errMess=<any>errmess;this.isWaiting=false;
+    console.log('Error fetching vehicles:', this.errMess);},
+    complete:()=> {console.log("complete "+this.isWaiting);}
+  });
+
   }
+onFilterChange() {
+  console.log('Filter text:', this.searchQuery);
+  this.applyFilter()
+}
+
 
   
 
@@ -56,11 +70,26 @@ onFilterChange() {
 
   onDelete(id: number) {
     if (confirm('Are you sure you want to delete this vehicle?')) {
-      this.vehicleService.deleteVehicle(id).subscribe(() => {
-        this.vehicles$ = this.vehicleService.getAllVehicles();
+      this.vehicleService.deleteVehicle(id)
+      .subscribe({next:() => {
+      //  this.vehicles$ = this.vehicleService.getAllVehicles();
+        this.isWaiting=false;
+        console.log("Vehicle deleted successfully!");
+        const index = this.vehicles.findIndex(vehicle => vehicle.id === id);
+        if (index !== -1) {
+            this.vehicles.splice(index, 1);
+        }},
+
+
+error:(errmess)=>{this.vehicles=[];
+  this.errMess=<any>errmess;this.isWaiting=false;
+  console.log('Error fetching vehicles:', this.errMess);},
+  complete:()=> {console.log("complete "+this.isWaiting);}
+
       });
     }
   }
+
 
   onAdd() {
     this.router.navigateByUrl('/vehicles/edit/-1');

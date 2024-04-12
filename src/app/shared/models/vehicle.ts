@@ -4,9 +4,10 @@ export interface Vehicle {
     registration: string;
     brand: string;
     model: string;
-  //  year: number;
     pricePerDay: number;
-    images: string[];
+    image: string; 
     status: string;
     dateOfRegistration:Date;
+    color:String;
+    type:String
 }

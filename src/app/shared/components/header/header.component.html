@@ -1,69 +1,65 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <ul class="navbar-nav">
-        <a class="navbar-brand" href="#">
-            <img src="..\..\..\assets\bootstrap-solid.png" width="30" height="30" alt="">
-        </a>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2 " type="search" placeholder="Search"  aria-label="Search">
-            <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
-        </form>
-
-        <!-- Other Navbar Items -->
-
-    </ul>
-
-    <!-- Profile Logo and Link at the end of the navbar -->
-    <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-            <div>
-            <a class="nav-link" href="/profile">
-                <img src="..\..\..\assets\hayfa.jpg" alt="Profile Logo" width="40" height="40">
-            </a>
-        </div>
-        </li>
-    </ul>
-    
-</nav>
-
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light ">
-   
-    <a class="navbar-brand" routerLink="/">Rent A Car</a>
+<!-- Header for authenticated users -->
+<ng-container *ngIf="isAuth; else notAuthenticatedHeader">
+  <nav class="navbar  navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand " routerLink="/">Rent A Car</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">  <!-- this is how i deplaced  all nav items to the right-->
-        <li class="nav-item ">
-          <a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
+      <ul class="navbar-nav mr-auto">
+        <!-- Nav items for authenticated users -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/dashboard" outerLinkActive="active">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/vehicles" outerLinkActive="active">Cars management</a>
+          <a class="nav-link" routerLink="/vehicles" outerLinkActive="active">Cars Management</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="/customers" outerLinkActive="active">Clients management</a>
-          </li>
+          <a class="nav-link" routerLink="/customers" outerLinkActive="active">Clients Management</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/locations" outerLinkActive="active">Car Rental Service</a>
+        </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-            Export
-          </a>
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">Export</a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" value="Download PDF"   href="#">Export</a>
+            <a class="dropdown-item" href="#">Download PDF</a>
             <a class="dropdown-item" href="#">Share Details</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Something else here</a>
           </div>
         </li>
-        
-        <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
-        </li>
-    
       </ul>
-
+      <!-- Profile Link -->
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+          <img src="..\..\..\assets\hayfa.jpg" alt="Profile Logo" width="40" height="40">
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/profile">Visit Profile</a>
+          <a class="dropdown-item" href="#" (click)="signOut()">Sign Out</a>
+        </div>
+      </div>
     </div>
   </nav>
 
+</ng-container>
 
-  
+<!-- Header for not authenticated users -->
+<ng-template #notAuthenticatedHeader>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" routerLink="/">Rent A Car</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Search form -->
+      <form class="form-inline my-2 my-lg-0 ml-auto">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      <!-- Sign In Link -->
+      <a class="nav-link" routerLink="/signin">Sign In</a>
+    </div>
+  </nav>
+</ng-template>

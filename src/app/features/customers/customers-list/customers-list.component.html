@@ -54,6 +54,7 @@
           <!-- <button  class="btn btn-old-gold mb-2 " (click)="onAddCustomer()">add Contact</button>-->
 
         </div>
+        <div *ngIf="customers.length>0; else noCustomers">
         <div class="card-body">
 
 
@@ -77,14 +78,16 @@
                   <th scope="row">{{c.id}}</th>
                   <td>
                     <div class="d-flex align-items-center">
-                      <img src="{{BaseURL+c.image}}" alt="Customer Photo" class="mr-2"
+                      <img *ngIf="c.image" [src]="BaseURL+'api/'+c.image" alt="Customer Photo" class="mr-2"
+                        style="width: 40px; height: 40px; border-radius: 50%;">
+                      <img *ngIf="!c.image" [src]="defaultImageUrl" alt="Default Photo" class="mr-2"
                         style="width: 40px; height: 40px; border-radius: 50%;">
                       <strong>{{c.name}}</strong>
                     </div>
                   </td>
                   <td>{{c.email}}</td>
                   <td>{{c.phone}}</td>
-                  <td>{{c.licenceNumber}}</td>
+                  <td>{{c.licence_number}}</td>
                   <td>15-01-xxxx</td>
                   <td>@mdo</td>
                   <td>
@@ -101,9 +104,21 @@
           </div>
         </div>
       </div>
+      <div  *ngIf="isWaiting" class="text-center">
+        <div class="spinner-border" role="status"></div>
+        <h4>Looding ... please wait !</h4>
+       </div> 
+      <ng-template #noCustomers>
+      <!--  <p>No Contacts</p>-->
+      <p [hidden]="isWaiting">No Customers</p>
+         <div *ngIf="errMess" class="alert alert-danger">
+            <strong>Error! </strong> {{errMess}}
+        </div>
+      </ng-template>
+    </div>
+      </div>
     </div>
   </div>
 
 
   <!-- </div>-->
-</div>

@@ -9,4 +9,23 @@
   .nav-link:hover {
     background-color: #343a40; /* Background color on hover */
   }
+  .bg-marin{
+    background-color:#1F3BB3;
+  }
+  .btn-terk{
+    background-color:#a7142d;
+  }
   
+  
+/* app-sidebar.component.css */
+.sidebar {
+  width: 250px; /* Set initial width */
+  transition: width 0.3s ease; /* Add transition for smooth animation */
+}
+.hidden {
+  width: 0; /* Hide the sidebar by setting its width to 0 */
+}
+.visible {
+  width: 250px; /* Show the sidebar by setting its width back to its initial value */
+}
+

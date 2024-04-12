@@ -1,54 +1,45 @@
+<!-- Dynamic Sidebar using Bootstrap and Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar">
     <div class="sidebar-sticky pt-4">
         <ul class="nav flex-column">
+            <!-- Dashboard -->
             <li class="nav-item">
                 <a class="nav-link active" routerLink="/dashboard">
-                    <span class="icon" data-feather="home"></span>
-                    <span class="ml-2">Dashboard</span>
+                    <i class="fa fa-fw fa-home mr-2"></i>
+                    Dashboard
                 </a>
             </li>
+            <!-- Clients Management -->
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#clientsMenu" aria-expanded="false" aria-controls="clientsMenu">
-                    <span class="icon" data-feather="file"></span>
-                    <span class="ml-2">Clients Management</span>
+                <a class="nav-link" routerLink="/customers">
+                    <i class="fa fa-fw fa-user mr-2"></i>
+                    Clients Management
                 </a>
-                <ul class="nav flex-column pl-4 collapse" id="clientsMenu">
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/customers/edit/-1">Add Client</a>
-                    </li>
-                    <!-- Add links for other CRUD operations -->
-                </ul>
             </li>
+            <!-- Car Management -->
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#carsMenu" aria-expanded="false" aria-controls="carsMenu">
-                    <span class="icon" data-feather="shopping-cart"></span>
-                    <span class="ml-2">Car Management</span>
+                <a class="nav-link" routerLink="/vehicles">
+                    <i class="fa fa-car mr-2"></i>
+                    Car Management
                 </a>
-                <ul class="nav flex-column pl-4 collapse" id="carsMenu">
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/cars/add">Add Car</a>
-                    </li>
-                    <!-- Add links for other CRUD operations -->
-                </ul>
             </li>
+            <!-- Car Rental Service -->
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#locationsMenu" aria-expanded="false" aria-controls="locationsMenu">
-                    <span class="icon" data-feather="users"></span>
-                    <span class="ml-2">Location Management</span>
+                <a class="nav-link" routerLink="/locations">
+                    <i class="fa fa-handshake-o mr-2"></i>
+                    Car Rental Service
                 </a>
-                <ul class="nav flex-column pl-4 collapse" id="locationsMenu">
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/locations/add">Add Location</a>
-                    </li>
-                    <!-- Add links for other CRUD operations -->
-                </ul>
             </li>
         </ul>
         <!-- Saved Reports -->
         <!-- Include saved reports section as before -->
     </div>
 </nav>
-<script src="../../../../../node_modules/feather-icons/dist/feather.min.js"></script>
+
+<!-- Include Feather Icons -->
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         feather.replace();

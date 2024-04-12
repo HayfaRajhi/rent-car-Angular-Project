@@ -21,11 +21,11 @@ export class CustomerService {
 
 
   updateCustomer(id: number,customer: Customer) :Observable<Customer>{
-
-    return this.httpClient.put<Customer>(this.baseURL+"customers/"+id,customer,this.httpOptions);
+    console.log(id)
+    return this.httpClient.put<Customer>(this.baseURL+"customers/edit/"+id,customer,this.httpOptions);
   }
-  getCustomers():Observable<Customer[]>{
-    return this.httpClient.get<Customer[]>(this.baseURL+"customers/")
+  getAllCustomers():Observable<Customer[]>{
+    return this.httpClient.get<Customer[]>(this.baseURL+"customers")
   }
 
   deleteCustomerById(id:number):Observable<any>{
@@ -47,7 +47,7 @@ export class CustomerService {
   }*/
   addCustomer(customer:Customer):Observable<Customer>{
 
-    return this.httpClient.post<Customer>(this.baseURL+"customers/",customer,this.httpOptions);
+    return this.httpClient.post<Customer>(this.baseURL+"customers/edit/"+customer.id,customer,this.httpOptions);
 
   }
 

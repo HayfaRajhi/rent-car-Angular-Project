@@ -8,7 +8,7 @@ export const CUSTOMERS :Customer[]=[
         phone:1234678,
         image:"../../assets/hayfa.jpg",
         birthay:"11-13-2001",
-        licenceNumber:47
+        licence_number:'47'
     },
     {
         id:2,
@@ -17,7 +17,7 @@ export const CUSTOMERS :Customer[]=[
         phone:1234678,
         image:"../../assets/default-avatar.jpg",
         birthay:"05-09-2001",
-        licenceNumber:80
+        licence_number:'80'
 
 
     }

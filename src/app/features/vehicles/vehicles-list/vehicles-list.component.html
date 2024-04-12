@@ -15,7 +15,9 @@
    <!-- <div *ngFor="let c of vehicles$ | async " class="col-md-4 mb-4">-->
     <div *ngFor ="let c of filteredVehicles" class="col-md-4 mb-4">
     <div class="card h-100">
-        <img class="card-img-top img-fluid fixed-size" src="{{ baseURL + c.images[0] }}" alt="{{ c.model }}"> <!--fixed-size--->
+        <img class="card-img-top img-fluid fixed-size" src="{{ baseURL+'api/' + c.image }}" alt="{{ c.model }}"> <!--fixed-size--->
+        
+        <div *ngIf="vehicles.length>0 ; else noVehicles">
         <div class="card-body">
           <h5 class="card-title">{{ c.model }}</h5>
           <p class="card-text">{{ c.brand }}</p>
@@ -26,6 +28,22 @@
             <li class="list-group-item "> <strong >Status:</strong> {{ c.status }}</li>
           </ul>
         </div>
+      </div>
+
+
+
+
+        <div  *ngIf="isWaiting" class="text-center">
+          <div class="spinner-border" role="status"></div>
+          <h4>Looding ... please wait !</h4>
+         </div> 
+        <ng-template #noVehicles>
+        <!--  <p>No Contacts</p>-->
+        <p [hidden]="isWaiting">No Vehicles</p>
+           <div *ngIf="errMess" class="alert alert-danger">
+              <strong>Error! </strong> {{errMess}}
+          </div>
+        </ng-template>
         <!--<div class="card-footer bg-transparent border-top-0">-->
           <div class="card-footer">
          <!-- <small class="text-muted">Price per day: ${{ c.pricePerDay }}</small>-->

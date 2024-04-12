@@ -1,7 +1,9 @@
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FileUploadService } from 'src/app/services/file-upload.service';
 import { VehicleService } from 'src/app/services/vehicle.service';
 import { Vehicle } from 'src/app/shared/models/vehicle';
 @Component({
@@ -19,15 +21,24 @@ export class VehicleAddComponent implements OnInit{
     model: null,
     //year: null,
     pricePerDay: null,
-    images: [],
+   // images: [],
+   image:null,
     status: null,
-    dateOfRegistration: null
+    dateOfRegistration: null,
+    color:null,
+    type:null
   };
   selectedImages: File[] = [];
   imageUrls: string[] = []; // Array to store object URLs
   today: string;
   showConfirmationModal = false;
   carForm:FormGroup
+     /* upload file*/
+     selectedFiles?: FileList;
+     currentFile?: File;
+     progress = 0;
+     message = '';
+   
 
 onVehicles() {
   this.router.navigateByUrl('/vehicles')
@@ -38,6 +49,7 @@ onVehicles() {
               private router:Router,
               private vehicleService:VehicleService,
               private route:ActivatedRoute,
+              private fileUploadService: FileUploadService,
      @Inject("BaseURL") public baseURL
   ) {
     const date = new Date();
@@ -49,6 +61,8 @@ onVehicles() {
   this.initializeForm();
   this.route.paramMap.subscribe(result=>{
     let id =result.get('id');
+    console.log(id)
+
     if(id != "-1" )this.initVehicle(id);
     });
   }
@@ -56,6 +70,8 @@ onVehicles() {
   initVehicle(id){
     this.vehicleService.getVehicleById(id).subscribe(vehicle=>{
       this.vehicle=vehicle;
+      console.log(vehicle)
+
       this.carForm.patchValue({
         registration: vehicle.registration,
         model: vehicle.model,
@@ -65,11 +81,12 @@ onVehicles() {
         brand: vehicle.brand,
         status:vehicle.status,
         dateOfRegistration: vehicle.dateOfRegistration, // You can set the date value if needed
-     
-        images:vehicle.images.slice()
+        color:vehicle.color,
+        image:vehicle.image
+       // images:vehicle.images.slice()
             });
-      this.imageUrls = vehicle.images.slice(); // Use slice to create a new copy
-      console.log(this.imageUrls)
+    //  this.imageUrls = vehicle.images.slice(); // Use slice to create a new copy
+      //console.log(this.imageUrls)
       console.log(this.vehicle);
     });
   }
@@ -80,12 +97,13 @@ onVehicles() {
         registration :['', Validators.required],
         model: ['', Validators.required], // New field: model
         status: ['', Validators.required] ,// New field: status
-
+        color:['',Validators.required],
         brand: ['', Validators.required],
         dateOfRegistration: ['', Validators.required], // You can add additional validation for date if needed
         pricePerDay: ['', [Validators.required, Validators.min(0)]],
         //images: ['', Validators.required] // You can add custom validation for file upload
-  
+        type: ['', Validators.required],
+
       });
 
   }
@@ -146,7 +164,9 @@ onVehicles() {
   // Method to add new vehicle
   addNewVehicle() :void{
     this.vehicleService.createVehicle(this.carForm.value).subscribe(
-      vehicle =>{
+      (vehicle:Vehicle) =>{
+        this.upload(vehicle.id);
+
         console.log('Vehicle added successfully');
         this.router.navigate(['/vehicles/'+vehicle.id]);
 
@@ -198,6 +218,47 @@ onVehicles() {
   private createObjectURL(file: File): string {
   return window.URL.createObjectURL(file);
 }
+   /*upload file*/
+   selectFile(event: any): void {
+    this.selectedFiles = event.target.files;
+  }
 
+  upload(id: number): void {
+    console.log("in the upload id is :" +id)
+    this.progress = 0;
+
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
+
+      if (file) {
+        this.currentFile = file;
+
+        this.fileUploadService.upload(this.currentFile,id,"Vehicle").subscribe({
+          next: (event: any) => {  
+            if (event.type === HttpEventType.UploadProgress) {
+              this.progress = Math.round(100 * event.loaded / event.total); 
+            } else if (event instanceof HttpResponse) {
+              this.message = event.body.message;
+              this.router.navigateByUrl('/vehicles/' +id);
+            }
+          },
+          error: (err: any) => {
+            console.log(err);
+            this.progress = 0;
+
+            if (err.error && err.error.message) {
+              this.message = err.error.message;
+            } else {
+              this.message = 'Could not upload the file!';
+            }
+
+            this.currentFile = undefined;
+          }
+        });
+      }
+
+      this.selectedFiles = undefined;
+    }
+  }
 }
 

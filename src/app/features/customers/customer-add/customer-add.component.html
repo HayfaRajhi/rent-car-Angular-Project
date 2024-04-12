@@ -80,10 +80,10 @@
              
 
                 <div class="col mb-4 ">
-                    <label for="licenseNumber">driver's license number</label>
-                <input type="number" id="licenseNumber" name="licenseNumber" class="form-control" formControlName="licenseNumber"
-                    [ngClass]="{'is-invalid':customerForm.get('licenseNumber').invalid && customerForm.get('licenseNumber').dirty}">
-                <div *ngIf="customerForm.get('licenseNumber').invalid && customerForm.get('licenseNumber').dirty" class="invalid-feedback">
+                    <label for="licence_number">driver's license number</label>
+                <input type="text" id="licence_number" name="licence_number" class="form-control" formControlName="licence_number"
+                    [ngClass]="{'is-invalid':customerForm.get('licence_number').invalid && customerForm.get('licence_number').dirty}">
+                <div *ngIf="customerForm.get('licence_number').invalid && customerForm.get('licence_number').dirty" class="invalid-feedback">
                     please provide a licenseNumber</div>
             </div>
             <div class="col mb-4 ">
@@ -101,8 +101,22 @@
                 <div *ngIf="customerForm.get('endValidity').invalid && customerForm.get('endValidity').dirty" class="invalid-feedback">
                     Please provide the end date of validity.</div>
             </div>
-            </div>
 
+            </div>
+<div class="form-row">
+        <label class="btn btn-success p-0 ">
+            <input type="file" (change)="selectFile($event)" />
+        </label>
+        <div *ngIf="currentFile" class="progress my-3">
+            <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                attr.aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"
+                [ngStyle]="{ width: progress + '%' }">
+                {{ progress }}%
+        </div>
+
+        <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
+    </div>
+</div>
             
             <button type="submit" class="btn text-white btn-terk" [disabled]="!customerForm.valid"><!---- [disabled]="!form.valid">--> Save</button>
         </form>

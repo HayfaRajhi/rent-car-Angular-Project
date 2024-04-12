@@ -4,5 +4,4 @@ export class revervation {
   customerId: number;
   startDate: Date;
   endDate: Date;
-  totalPrice: number;
 }

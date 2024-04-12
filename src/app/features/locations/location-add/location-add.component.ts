@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
+import { LocationService } from 'src/app/services/location.service';
 import { VehicleService } from 'src/app/services/vehicle.service';
 import { Customer } from 'src/app/shared/models/customer';
 import { RentalLocation } from 'src/app/shared/models/location';
@@ -21,10 +23,13 @@ export class LocationAddComponent implements OnInit {
     customer: null,
     vehicle: null,
     guaranteeType: null,
-    rentalFee: null
+    rentalFee: null,
+    totalPrice :null
   };
 vehicles: Vehicle[];
-
+  minStartDate: string; // Holds the minimum date for start date
+  minEndDate: string; // Holds the minimum date for end date
+  startDateFilled: boolean = false;
 
   onLocations() {
     throw new Error('Method not implemented.');
@@ -36,25 +41,52 @@ vehicles: Vehicle[];
 
 
   constructor(private formBuilder: FormBuilder,
+    private locationService: LocationService,
     private customerService: CustomerService,
-    private vehicleService : VehicleService) { }
+    private vehicleService : VehicleService,
+    private router :Router,
+    private route :ActivatedRoute) { }
 
   
     ngOnInit(): void {
-      this.initializeForm();
       this.fetchCustomers();
       this.fetchVehicles();
+      this.initializeForm();
+      this.setMinDate(); // Set minimum date for start date field
+      this.updateOrDelete();
+      this.locationForm.get('endDate').disable(); // Disable end date if start date is empty
+
     }
-  
-    initializeForm(): void {
+    private setMinDate(): void {
+      const today = new Date();
+      // Format today's date as YYYY-MM-DD (required for input type date)
+      this.minStartDate = today.toISOString().split('T')[0];
+      this.minEndDate = today.toISOString().split('T')[0];
+    }
+    setMinEndDate(): void {
+      const startDate = this.locationForm.get('startDate').value;
+      const startDateObj = new Date(startDate);
+      console.log(startDate)
+      // Add one day to start date
+      startDateObj.setDate(startDateObj.getDate() + 1);
+    
+      // Convert the date to the yyyy-mm-dd format
+      const minEndYear = startDateObj.getFullYear();
+      const minEndMonth = ('0' + (startDateObj.getMonth() + 1)).slice(-2); // Add leading zero if necessary
+      const minEndDay = ('0' + startDateObj.getDate()).slice(-2); // Add leading zero if necessary
+      this.minEndDate = `${minEndYear}-${minEndMonth}-${minEndDay}`;
+    }
+    
+    
+ 
+    private initializeForm(): void {
       this.locationForm = this.formBuilder.group({
-        clientName: ['', Validators.required],
-        vehicleId: ['', Validators.required],
+        customer: [null, Validators.required], // Assuming customer is a form control for the Customer object
+        vehicle: [null, Validators.required],
         startDate: ['', Validators.required],
-        endDate: ['', Validators.required],
-        pricePerDay: ['', Validators.required],
+        endDate: [ Validators.required], // Initially disabled
+        pricePerDay: [ {value:'',disabled: true}],
         guaranteeType: [''],
-        additionalServices: [''],
         insuranceInfo: this.formBuilder.group({
           provider: [''],
           policyNumber: [''],
@@ -64,28 +96,95 @@ vehicles: Vehicle[];
           licenseNumber: [''],
           expiryDate: ['']
         }),
-        notes: [''],
         totalPrice: [{ value: '', disabled: true }]
       });
-  
+     // Subscribe to changes in vehicleId to update pricePerDay
+     this.locationForm.get('vehicle').valueChanges.subscribe(vehicle => {
+      const selectedVehicle = this.vehicles.find(v => v === vehicle);
+      console.log(selectedVehicle)
+      console.log(vehicle)
+      console.log(this.vehicles)
+      if (selectedVehicle) {
+        this.locationForm.patchValue({
+          pricePerDay: selectedVehicle.pricePerDay // Update pricePerDay based on selected vehicle
+        });
+      }});
+// Subscribe to changes in start date to enable/disable end date and recalculate total price
+this.locationForm.get('startDate').valueChanges.subscribe(() => {
+  this.startDateFilled = !!this.locationForm.get('startDate').value;
+  if (!this.startDateFilled) {
+    (console.log(this.startDateFilled))
+    this.locationForm.get('endDate').disable(); // Disable end date if start date is empty
+  } else {
+    this.locationForm.get('endDate').enable(); // Enable end date if start date is filled
+    this.setMinEndDate();
+
+  }
+  // Recalculate total price or perform other necessary actions...
+});
+
       // Subscribe to changes in start date, end date, and price per day to recalculate total price
       this.locationForm.get('startDate').valueChanges.subscribe(() => this.calculateTotalPrice());
       this.locationForm.get('endDate').valueChanges.subscribe(() => this.calculateTotalPrice());
       this.locationForm.get('pricePerDay').valueChanges.subscribe(() => this.calculateTotalPrice());
+    
+    
     }
   
-    fetchCustomers(): void {
-      this.customerService.getCustomers().subscribe(customers => {
+    private fetchCustomers(): void {
+      this.customerService.getAllCustomers().subscribe(customers => {
         this.customers = customers;
       });
     }
   
-    fetchVehicles(): void {
+    private fetchVehicles(): void {
       this.vehicleService.getAllVehicles().subscribe(vehicles => {
         this.vehicles = vehicles;
       });
     }
   
+     private initLocation(id){
+      this.locationService.getLocationById(id).subscribe(location=>{
+        this.location=location;
+        this.locationForm.patchValue(Location);
+        console.log(this.location);
+     });
+    }
+
+    private addNewLocation():void{
+      this.locationService.createLocation(this.locationForm.value).subscribe(
+        location => {
+          console.log("locations added Successfully .."+location)
+          this.router.navigate(['/locations/'+location.id]);
+        }
+      )
+    }
+    private updateLocation():void{
+      const formData = { ...this.locationForm.value };
+      this.vehicleService.updateVehicle(this.location.id,formData).subscribe(
+        (location)=>{
+        console.log("locations updated Successfully .."+location)
+        this.router.navigate(['/locations/'+location]);
+        })
+    }
+
+    private updateOrDelete():void{
+      this.route.paramMap.subscribe(
+        (result)=>{
+          let id = result.get('id');
+          if (id!="-1"){
+            this.initLocation(id)
+          }
+        }
+      )
+    }
+
+
+
+
+
+
+
 
   nextSection(section: 'client' | 'vehicle' | 'rental'): void {
     this.currentSection = section;
@@ -94,9 +193,13 @@ vehicles: Vehicle[];
   // Method to submit the form
   onSubmit(): void {
     if (this.locationForm.valid) {
-      // Perform submission logic here
       console.log('Location form submitted successfully');
-    } else {
+      if( this.location.id==null){
+        this.addNewLocation();
+      }
+      else this.updateLocation();
+    }
+   else {
       // Mark all fields as touched to display validation messages
       this.locationForm.markAllAsTouched();
     }
@@ -121,7 +224,7 @@ vehicles: Vehicle[];
   // Method to select a customer from the filtered list
   selectCustomer(customer: Customer): void {
     this.locationForm.patchValue({
-      clientName: customer.name,
+      customer: customer,
       // Update other client information fields if needed
     });
     this.filteredCustomers = []; // Clear the filtered list after selecting a customer

@@ -1,0 +1,73 @@
+<div class="container-fluid mt-4">
+
+    <div class="row">
+      <div class="col-md-9 mb-3">
+        <input type="text" class="form-control" placeholder="Search rental">
+      </div>
+
+  <div class="col-md-3 mb-3 float-left">
+    <button class="btn btn-md btn-primary float-right" (click)="onAdd()">Add a new  Location</button>
+  </div>
+</div>
+<div class="row">
+  <div>  <h2>List of Car Rentals</h2></div>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">End Date</th>
+          <th scope="col">Customer</th>
+          <th scope="col">Vehicle</th>
+          <th scope="col">Guarantee Type</th>
+          <th scope="col">Rental Fee</th>
+          <th scope="col">Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let location of rentalLocations">
+          <th scope="row">{{ location.id }}</th>
+          <td>{{ location.startDate | date }}</td>
+          <td>{{ location.endDate | date }}</td>
+          <td>{{ location.customer.name }}
+            <button class="btn btn-sm btn-info" (click)="showCustomerDetails(location.customer)">Details</button>
+</td>
+          <td>{{ location.vehicle.model }}</td>
+          <td>{{ location.guaranteeType }}</td>
+          <td>{{ location.rentalFee | currency }}</td>
+          <td>{{ location.totalPrice | currency }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="rentalLocations && rentalLocations.length === 0" class="alert alert-warning" role="alert">
+    No car rental locations found.
+  </div>
+ <!--   <div *ngIf="rentalLocations && rentalLocations.length > 0; else noLocations">
+    <div *ngFor="let location of rentalLocations" class="card mb-3">
+      <div class="card-header">
+        <h5 class="card-title">Rental Location ID: {{ location.id }}</h5>
+      </div>
+      <div class="card-body">
+        <p class="card-text">Start Date: {{ location.startDate | date }}</p>
+        <p class="card-text">End Date: {{ location.endDate | date }}</p>
+        <p class="card-text">Customer: {{ location.customer.name }}</p>
+        <p class="card-text">Vehicle: {{ location.vehicle.model }}</p>
+        <p class="card-text">Guarantee Type: {{ location.guaranteeType }}</p>
+        <p class="card-text">Rental Fee: {{ location.rentalFee | currency }}</p>
+        <p class="card-text">Total Price: {{ location.totalPrice | currency }}</p>
+      </div>
+    </div>
+  </div>
+  <ng-template #noLocations>
+    <div class="alert alert-warning" role="alert">
+      No car rental car found.
+    </div>
+  </ng-template>
+</div>
+
+-->
+   <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>-->
+  </div>
+  

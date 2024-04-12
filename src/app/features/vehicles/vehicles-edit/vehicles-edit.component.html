@@ -9,7 +9,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-6">
-                <img src="{{ baseURL + vehicle.images[0] }}" alt="Vehicle Image" class="img-fluid rounded">
+                <img src="{{ baseURL+'api/' + vehicle.image }}" alt="Vehicle Image" class="img-fluid rounded">
               </div>
               <div class="col-md-6">
                 <h5 class="card-title"> Model :{{ vehicle.model }}</h5>
@@ -33,17 +33,17 @@
           </div>
         </div>
       </div>
-      <!-- Image Gallery Section -->
+      <!-- Image Gallery Section 
       <div class="col-md-6 mt-4 mt-md-0">
         <h2 class="text-center mb-4">Vehicle Images</h2>
         <div class="row">
-          <div class="col-md-4 mb-3" *ngFor="let image of vehicle?.images ">
+          <div class="col-md-4 mb-3" *ngFor="let image of vehicle?.image ">
             <div class="card border-secondary">
               <img [src]="baseURL + image" class="card-img-top img-fluid rounded" alt="Vehicle Image">
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
   

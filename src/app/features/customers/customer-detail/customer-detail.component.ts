@@ -9,6 +9,32 @@ import { Customer } from 'src/app/shared/models/customer';
   styleUrls: ['./customer-detail.component.css']
 })
 export class CustomerDetailComponent implements OnInit {
+  defaultImageUrl = '../../../assets/default-avatar.jpg'; // Provide the path to your default image here
+
+
+
+
+  constructor(private customerService:CustomerService,
+    private route:ActivatedRoute,
+    private router:Router,
+    @Inject('BaseURL') public BaseURL
+    ){}
+
+ngOnInit(): void {
+this.route.paramMap.subscribe(res=>{     this.idCustomer = parseInt(res.get("id"));
+});
+// this.customer=this.customerService.getCustomerById(this.idCustomer);
+if (!isNaN(this.idCustomer)) {
+
+this.customerService.getCustomerById(this.idCustomer).subscribe(customer=> {this.customer=customer;
+  console.log(customer);
+  console.log(customer.name);
+})
+// this.customerService.getCustomerById(this.idCustomer).subscribe((cutomer)=>this.customer=cutomer);
+}}
+onBack() {
+  return this.router.navigateByUrl('/customers')
+}
 onCustomers() {
   return this.router.navigateByUrl('/customers')
 }
@@ -17,21 +43,7 @@ throw new Error('Method not implemented.');
 }
   idCustomer :any;
   customer:Customer;
-  constructor(private customerService:CustomerService,
-              private route:ActivatedRoute,
-              private router:Router,
-              @Inject('BaseURL') public baseURL
-              ){}
 
-  ngOnInit(): void {
-    this.route.paramMap.subscribe(res=>{     this.idCustomer = parseInt(res.get("id"));
-  });
-   // this.customer=this.customerService.getCustomerById(this.idCustomer);
-   if (!isNaN(this.idCustomer)) {
-
-    this.customerService.getCustomerById(this.idCustomer).subscribe(customer=> {this.customer=customer;})
-   // this.customerService.getCustomerById(this.idCustomer).subscribe((cutomer)=>this.customer=cutomer);
-  }}
   
 }
 

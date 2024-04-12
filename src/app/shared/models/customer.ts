@@ -5,7 +5,7 @@ export class Customer {
     phone :number;
     image:string;
     birthay:String;
-    licenceNumber:number
+    licence_number:String
 
     /*
     id ?: number;

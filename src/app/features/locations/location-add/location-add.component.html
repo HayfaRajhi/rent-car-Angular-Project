@@ -16,26 +16,27 @@
           <ng-template #update><h3>Update Location</h3></ng-template>
         </div>
         <div class="card-body">
-
+<form (ngSubmit)="onSubmit()" [formGroup]="locationForm">
           <!-- Client Information Header -->
           <h4>Client Information</h4>
 
           <!-- Client Select -->
           <div class="form-group">
-            <label for="clientName">Select Client:</label>
-            <select class="form-control" id="clientName" formControlName="clientName">
-              <option *ngFor="let customer of customers" [value]="customer.id">{{ customer.name }}</option>
+            <label for="customer">Select Client:</label>
+            <select class="form-control" id="customer" formControlName="customer">
+                <option *ngFor="let customer of customers" [ngValue]="customer">{{ customer.name }}</option>
             </select>
-          </div>
+        </div>
+        
 
           <!-- Vehicle Information Header -->
           <h4>Vehicle Information</h4>
 
           <!-- Vehicle Select -->
           <div class="form-group">
-            <label for="vehicleId">Select Vehicle:</label>
-            <select class="form-control" id="vehicleId" formControlName="vehicleId">
-              <option *ngFor="let vehicle of vehicles" [value]="vehicle.id">{{ vehicle.registration }}</option>
+            <label for="vehicle">Select Vehicle:</label>
+            <select class="form-control" id="vehicle" formControlName="vehicle">
+              <option *ngFor="let vehicle of vehicles" [ngValue]="vehicle">{{ vehicle.registration }}</option>
             </select>
           </div>
 
@@ -45,19 +46,19 @@
           <!-- Start Date Input -->
           <div class="form-group">
             <label for="startDate">Start Date:</label>
-            <input type="date" class="form-control" id="startDate" formControlName="startDate">
+            <input type="date" class="form-control" id="startDate" formControlName="startDate" [min]="minStartDate">
           </div>
 
           <!-- End Date Input -->
           <div class="form-group">
             <label for="endDate">End Date:</label>
-            <input type="date" class="form-control" id="endDate" formControlName="endDate">
+            <input type="date" class="form-control" id="endDate" formControlName="endDate"   [min]="minEndDate">
           </div>
 
           <!-- Price Per Day Input -->
           <div class="form-group">
             <label for="pricePerDay">Price Per Day:</label>
-            <input type="number" class="form-control" id="pricePerDay" formControlName="pricePerDay" [disabled]="true">
+            <input type="number" class="form-control" id="pricePerDay" formControlName="pricePerDay"[disabled] >
           </div>
 
           <!-- Total Price (Calculated Field) -->
@@ -67,9 +68,9 @@
           </div>
 
           <!-- Submit Button -->
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!locationForm.valid">Submit</button>
 
-        </div>
+        </form> </div>
       </div>
     </div>
   </div>
