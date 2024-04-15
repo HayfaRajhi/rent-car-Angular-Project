@@ -68,9 +68,9 @@ export class VehiclesEditComponent {
        .subscribe(vehicle=> {this.vehicle=vehicle;})
       })
   */
-    const id = +this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
     this.vehicleService.getVehicleById(id)
-      .subscribe(vehicle => this.vehicle = vehicle);
+        .subscribe(vehicle => this.vehicle = vehicle);
     console.log(this.vehicle)
     /*
       this.route.paramMap.subscribe(result =>{

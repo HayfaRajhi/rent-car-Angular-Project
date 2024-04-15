@@ -1,54 +1,81 @@
-import { Inject, Injectable } from '@angular/core';
-import { Customer } from '../../shared/models/customer';
-import { CUSTOMERS } from '../../shared/models/cutomers';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Customer} from '../../shared/models/customer';
+import {CUSTOMERS} from '../../shared/models/cutomers';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable, of} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
+import {AuthService} from "../auth/auth.service";
+import CONST from "../../../helpers/CONST";
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
+  customers: Customer[] = CUSTOMERS;
+  httpOptions = {};
+  snackBarConfig: MatSnackBarConfig = { duration: 3000, verticalPosition: 'top', horizontalPosition: 'right' };
 
-
-  customers :Customer[]= CUSTOMERS
-
-  httpOptions= {
-    headers: new HttpHeaders({
-
-      'content-Type': 'application/json'
-    })
-  };
-  constructor(private httpClient :HttpClient,@Inject('BaseURL') private baseURL) { }
-
-
-  updateCustomer(id: number,customer: Customer) :Observable<Customer>{
-    console.log(id)
-    return this.httpClient.put<Customer>(this.baseURL+"customers/edit/"+id,customer,this.httpOptions);
-  }
-  getAllCustomers():Observable<Customer[]>{
-    return this.httpClient.get<Customer[]>(this.baseURL+"customers")
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthService,
+    private snackBar: MatSnackBar,
+  ) {
+    const authToken = this.authService.getAuthToken();
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`
+      })
+    }
   }
 
-  deleteCustomerById(id:number):Observable<any>{
-   // let index=this.customers.findIndex(customer =>customer.id==id)
-    //return this.customers.splice(index,1)
-    return this.httpClient.delete<any>(this.baseURL+"customers/"+id);
+  updateCustomer(id: string, customer: Customer): Observable<Customer> {
+    return this.httpClient.put<Customer>(CONST.API_URL + "/customers/edit/" + id, customer, this.httpOptions).pipe(
+      tap((updatedCustomer: Customer) => {
+        this.snackBar.open('Customer updated successfully', 'Close', this.snackBarConfig);
+      }),
+      catchError((error) => {
+        this.snackBar.open('Error updating customer', 'Close', this.snackBarConfig);
+        return of(error);
+      })
+    );
   }
 
-  getCustomerById(id:number):Observable<Customer>{
-   // return this.customers.find(customer=>customer.id==id);
-   return this.httpClient.get<Customer>(this.baseURL+"customers/"+id);
-
+  getAllCustomers(): Observable<Customer[]> {
+    return this.httpClient.get<Customer[]>(CONST.API_URL + "/customers/all", this.httpOptions)
   }
 
-  /*
-  addCustomer(customer:Customer):void{
-    customer.id=this.customers[this.customers.length-1].id+1;
-    this.customers.push(customer)
-  }*/
-  addCustomer(customer:Customer):Observable<Customer>{
-
-    return this.httpClient.post<Customer>(this.baseURL+"customers/edit/"+customer.id,customer,this.httpOptions);
-
+  deleteCustomerById(id: number): Observable<any> {
+    return this.httpClient.delete<any>(CONST.API_URL + "customers/" + id, this.httpOptions).pipe(
+      tap(_ => {
+        this.snackBar.open('Customer deleted successfully', 'Close', this.snackBarConfig);
+        let index = this.customers.findIndex(customer => customer.id === id);
+        if (index !== -1) {
+          this.customers.splice(index, 1);
+        }
+      }),
+      catchError(error => {
+        this.snackBar.open('Error deleting customer', 'Close', this.snackBarConfig);
+        return of(error);
+      })
+    );
   }
 
+  getCustomerById(id: string): Observable<Customer> {
+    return this.httpClient.get<Customer>(CONST.API_URL + "/customers/" + id, this.httpOptions);
+  }
+
+  addCustomer(customer: Customer): Observable<Customer> {
+    return this.httpClient.post<Customer>(CONST.API_URL + "/customers/add", customer, this.httpOptions).pipe(
+      tap((newCustomer: Customer) => {
+        this.customers.push(newCustomer);
+        this.snackBar.open("Customer added successfully", 'Close', this.snackBarConfig);
+      }),
+      catchError(error => {
+        this.snackBar.open('Error adding customer', 'Close', this.snackBarConfig);
+        return of(error);
+      })
+    );
+  }
 }

@@ -1,23 +1,23 @@
-<div class="col-md-12">
-  <div class="card card-container"><!--
-    <img
-      id="profile-img"
-      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-      class="profile-img-card"
-    />
-  -->
-    <ng-container *ngIf="!isLoggedIn">
-      <form
-        name="form"
-        (ngSubmit)="f.form.valid && onSubmit()"
-        #f="ngForm"
-        novalidate
-      >
+<div class="az-signin-wrapper">
+  <div class="az-card-signin">
+    <h1 class="az-logo">az<span>i</span>a</h1>
+    <div class="az-signin-header">
+      <h2>Welcome back!</h2>
+      <h4>Please sign in to continue</h4>
+
+      <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <div class="form-group">
-          <label for="username">Username</label>
+          <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">
+            Login failed: {{ errorMessage }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
           <input
             type="text"
             class="form-control"
+            placeholder="Enter your username"
+            value="admin@flatlogic.com"
             name="username"
             [(ngModel)]="form.username"
             required
@@ -27,19 +27,17 @@
           <div class="invalid-feedback" *ngIf="username.errors && f.submitted">
             Username is required!
           </div>
-        </div>
-        
+        </div><!-- form-group -->
         <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            name="password"
-            [(ngModel)]="form.password"
-            required
-            minlength="5"
-            #password="ngModel"
-            [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
+          <label>Password</label>
+          <input type="password" class="form-control" placeholder="Enter your password"
+                 value="password"
+                 name="password"
+                 [(ngModel)]="form.password"
+                 required
+                 minlength="5"
+                 #password="ngModel"
+                 [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
           />
           <div *ngIf="password.errors && f.submitted" class="invalid-feedback">
             <div *ngIf="password.errors['required']">Password is required</div>
@@ -47,25 +45,16 @@
               Password must be at least 5 characters
             </div>
           </div>
-        </div>
-        
-        <div class="form-group">
-          <button class="btn btn-primary btn-block">Login</button>
-        </div>
-        
-        <div class="form-group">
-          <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">
-            Login failed: {{ errorMessage }}
-          </div>
-        </div>
+        </div><!-- form-group -->
+        <button type="submit" class="btn btn-az-primary btn-block">Sign In</button>
       </form>
-    </ng-container>
-    
-    <ng-container *ngIf="isLoggedIn">
-      <div class="alert alert-success">Logged in as {{ roles }}.</div>
-    </ng-container>
-  </div>
-</div>
+    </div><!-- az-signin-header -->
+    <div class="az-signin-footer">
+      <p><a href="">Forgot password?</a></p>
+      <p>Don't have an account? <a routerLink="/general-pages/signup">Create an Account</a></p>
+    </div><!-- az-signin-footer -->
+  </div><!-- az-card-signin -->
+</div><!-- az-signin-wrapper -->
 
 <!--<div class="form-group">
     <button class="btn btn-success" (click)="onSignIn()" [disabled]="isAuth">
@@ -77,32 +66,32 @@
         SignOut
      </button>
   </div>-->
-  <!--<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card mt-5">
-        <div class="card-header">
-          Sign In
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="form-group">
-              <label for="email">Email address</label>
-              <input type="email" class="form-control" id="email" placeholder="Enter email">
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" id="password" placeholder="Password">
-            </div>
-            <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="remember">
-              <label class="form-check-label" for="remember">Remember me</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Sign In</button>
-          </form>
-        </div>
+<!--<div class="container">
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card mt-5">
+      <div class="card-header">
+        Sign In
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password">
+          </div>
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="remember">
+            <label class="form-check-label" for="remember">Remember me</label>
+          </div>
+          <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
       </div>
     </div>
   </div>
+</div>
 </div>
 -->

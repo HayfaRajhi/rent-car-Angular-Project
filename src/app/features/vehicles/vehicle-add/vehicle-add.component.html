@@ -1,188 +1,206 @@
-<div class="container-fluid mt-4">
-    <!-- Show Lists of Vehicles Button
-    <div class="row mt-4">
-      <div class="col text-center">
-        <button type="submit" class="btn btn-primary" (click)="onVehicles()">Show Lists of Vehicles</button>
+<div class="az-content az-content-app az-content-contacts pd-b-0">
+  <div class="container">
+    <app-components-sidebar></app-components-sidebar>
+    <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+      <div class="az-content-breadcrumb">
+        <span>Vehicles</span>
+        <span>List</span>
       </div>
-    </div>
-     -->
-     <div class="row">
-      <div class="col-md-6 mb-3">
-      </div>
-      
-      <!-- Button -->
-      <div class="col-md-6 mb-3">
-        <button type="submit" class="btn btn-primary float-right" (click)="onVehicles()">Back to List of Vehicles</button>
-      </div>
-      </div>
-  <div class="row">
-
-    <!-- Left Side: Add New Car -->
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header bg-marin text-white">
-          <h5  *ngIf="!vehicle.id; else update "class="card-title">Add New Car</h5>
-          <ng-template #update> <h5 class="card-title">  Update Vehicle</h5></ng-template>
+      <div class="row justify-content-between mg-b-20">
+        <div class="col-sm-8">
+          <h2 *ngIf="!id; else update" class="az-content-title">Add New Car</h2>
+          <ng-template #update><h2 class="az-content-title">Edit Car</h2></ng-template>
         </div>
-        <div class="card-body">
-          <form (ngSubmit)="onSubmit()" [formGroup]="carForm">
-            <!--model-->
-            <div class="form-group">
-              <label for="model">Model:</label>
-              <input type="text" class="form-control" id="model" formControlName="model" placeholder="Enter model">
-              <div *ngIf="carForm.get('model').invalid && carForm.get('model').dirty" class="text-danger">
+        <div class="col-sm-4 d-flex align-items-center justify-content-end">
+          <button mat-stroked-button color="primary" (click)="onVehicles()">
+            Vehicles List
+          </button>
+        </div>
+      </div>
+
+      <mat-stepper #stepper>
+        <mat-step [stepControl]="carForm" errorMessage="Name is required.">
+          <form [formGroup]="carForm">
+            <ng-template matStepLabel>Fill out car data</ng-template>
+
+            <div class="form-row mb-3">
+              <!--model-->
+              <mat-form-field class="col full-width">
+                <mat-label>Model</mat-label>
+                <input type="text" matInput id="model" formControlName="model" placeholder="Enter model">
+                <mat-error
+                  *ngIf="(carForm.get('model').invalid && carForm.get('model').dirty) || carForm.get('model').hasError('required')">
                   Model is required
-              </div>
-          </div>
-                      <!-- Brand -->
-                      <div class="form-group">
-                        <label for="brand">Brand:</label>
-                        <select class="form-control" id="brand" formControlName="brand">
-                          <option value="">Select Brand</option>
-                          <option value="Toyota">Toyota</option>
-                          <option value="Honda">Honda</option>
-                          <option value="Ford">Ford</option>
-                        </select>
-                        <div *ngIf="carForm.get('brand').invalid && carForm.get('brand').dirty" class="text-danger">
-                          Brand is required
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="type">Type:</label>
-                        <select class="form-control" id="type" formControlName="type">
-                          <option value="">Select type</option>
-                          <option value="Luxury Cars">Luxury Cars</option>
-                          <option value="Sports Cars">Sports Cars</option>
-                          <option value="Convertibles">Convertibles</option>
-                          <option value="Compact Cars">Compact Cars</option>
-                        </select>
-                        <div *ngIf="carForm.get('type').invalid && carForm.get('type').dirty" class="text-danger">
-                          Brand is required
-                        </div>
-                      </div>
-            <!-- Registration -->
-            <div class="form-group">
-              <label for="registration">Registration:</label>
-              <input type="text" class="form-control" id="registration" formControlName="registration" placeholder="Enter registration number">
-              <div *ngIf="carForm.get('registration').invalid && carForm.get('registration').dirty" class="text-danger">
-                Registration is required
-              </div>
-            </div>
+                </mat-error>
+              </mat-form-field>
+              <!-- Brand -->
+              <mat-form-field class="col full-width">
+                <mat-label>Brand</mat-label>
+                <select matNativeControl id="brand" formControlName="brand">
+                  <option value="">Select Brand</option>
+                  <option value="Toyota">Toyota</option>
+                  <option value="Honda">Honda</option>
+                  <option value="Ford">Ford</option>
+                </select>
+                <mat-error
+                  *ngIf="(carForm.get('brand').invalid && carForm.get('brand').dirty) || carForm.get('brand').hasError('required')">
+                  Brand is required
+                </mat-error>
+              </mat-form-field>
 
-            <!-- Date of Registration -->
-            <div class="form-group">
-              <label for="dateOfRegistration">Date of Registration:</label>
-              <input type="date" class="form-control" id="date" formControlName="dateOfRegistration">
-              <div *ngIf="carForm.get('dateOfRegistration').invalid && carForm.get('dateOfRegistration').dirty" class="text-danger">
-                Date is required
-              </div>
             </div>
+            <div class="form-row mb-3">
+              <!-- Type -->
+              <mat-form-field class="col full-width">
+                <mat-label>Type</mat-label>
+                <select matNativeControl id="type" formControlName="type">
+                  <option value="">Select type</option>
+                  <option value="Luxury Cars">Luxury Cars</option>
+                  <option value="Sports Cars">Sports Cars</option>
+                  <option value="Convertibles">Convertibles</option>
+                  <option value="Compact Cars">Compact Cars</option>
+                </select>
+                <mat-error *ngIf="carForm.get('type').invalid && carForm.get('type').dirty">
+                  Type is required
+                </mat-error>
+              </mat-form-field>
+              <!-- Registration -->
+              <mat-form-field class="col full-width">
+                <mat-label>Registration</mat-label>
+                <input type="text" matInput id="registration" formControlName="registration"
+                       placeholder="Enter registration number">
+                <mat-error
+                  *ngIf="(carForm.get('registration').invalid && carForm.get('registration').dirty) || carForm.get('registration').hasError('required')">
+                  Registration is required
+                </mat-error>
+              </mat-form-field>
 
-            <!--status
-            <div class="form-group">
-              <label for="status">Status:</label>
-              <input type="text" class="form-control" id="status" formControlName="status" placeholder="Enter status">
-              <div *ngIf="carForm.get('status').invalid && carForm.get('status').dirty" class="text-danger">
+            </div>
+            <div class="form-row mb-3">
+              <!-- Date of Registration -->
+
+              <mat-form-field class="col full-width">
+                <mat-label>Date of Registration</mat-label>
+                <input matInput required formControlName="dateOfRegistration"
+                       [matDatepicker]="dateOfRegistrationPicker">
+                <mat-datepicker-toggle matIconSuffix [for]="dateOfRegistrationPicker"></mat-datepicker-toggle>
+                <mat-datepicker #dateOfRegistrationPicker></mat-datepicker>
+                <mat-error
+                  *ngIf="carForm.get('dateOfRegistration').invalid && carForm.get('dateOfRegistration').dirty && !carForm.get('dateOfRegistration').hasError('required')">
+                  Please enter a valid Date of Registration
+                </mat-error>
+                <mat-error
+                  *ngIf="(carForm.get('dateOfRegistration').invalid && carForm.get('dateOfRegistration').dirty) || carForm.get('dateOfRegistration').hasError('required')">
+                  Date of Registration is required
+                </mat-error>
+              </mat-form-field>
+              <!--status-->
+              <mat-form-field class="col full-width">
+                <mat-label>Status</mat-label>
+                <select matNativeControl id="status" formControlName="status">
+                  <option value="">Select Status</option>
+                  <option value="Available">Available</option>
+                  <option value="Rent">Rent</option>
+                </select>
+                <mat-error
+                  *ngIf="(carForm.get('status').invalid && carForm.get('status').dirty) || carForm.get('status').hasError('required')">
                   Status is required
-              </div>
-          </div>--->
-          <div class="form-group">
-            <label for="status">Status:</label>
-            <select class="form-control" id="status" formControlName="status">
-                <option value="">Select Status</option>
-                <option value="Available">Available</option>
-                <option value="Rent">Rent</option>
-            </select>
-            <div *ngIf="carForm.get('status').invalid && carForm.get('status').dirty" class="text-danger">
-                Status is required
+                </mat-error>
+              </mat-form-field>
             </div>
-        </div>
-        
-            <!-- Price -->
-            <div class="form-group">
-              <label for="pricePerDay">Price:</label>
-              <input type="number" class="form-control" id="pricePerDay" formControlName="pricePerDay" placeholder="Enter price per Day">
-              <div *ngIf="carForm.get('pricePerDay').invalid && carForm.get('pricePerDay').dirty" class="text-danger">
-                Price is required and must be greater than or equal to 0
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="color">Color:</label>
-              <select class="form-control" id="status" formControlName="color">
+            <div class="form-row mb-3">
+              <!-- Price -->
+              <mat-form-field class="col full-width">
+                <mat-label>Price per Day</mat-label>
+                <input type="number" matInput id="pricePerDay" formControlName="pricePerDay"
+                       placeholder="Enter price per Day">
+                <mat-error
+                  *ngIf="(carForm.get('pricePerDay').invalid && carForm.get('pricePerDay').dirty) || carForm.get('pricePerDay').hasError('required')">
+                  Price is required and must be greater than or equal to 0
+                </mat-error>
+              </mat-form-field>
+              <!-- Color -->
+              <mat-form-field class="col full-width">
+                <mat-label>Color</mat-label>
+                <select matNativeControl id="color" formControlName="color">
                   <option value="">Select color</option>
-                  <option value="red">red</option>
-                  <option value="black">black</option>
-                  <option value="white">white</option>
-              </select>
-              <div *ngIf="carForm.get('color').invalid && carForm.get('color').dirty" class="text-danger">
-                color is required
-              </div>
-          </div>
+                  <option value="red">Red</option>
+                  <option value="black">Black</option>
+                  <option value="white">White</option>
+                </select>
+                <mat-error
+                  *ngIf="(carForm.get('color').invalid && carForm.get('color').dirty) || carForm.get('color').hasError('required')">
+                  Color is required
+                </mat-error>
+              </mat-form-field>
+            </div>
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary" [disabled]="!carForm.valid">Add Car</button>
+            <div>
+              <button mat-stroked-button color="primary" matStepperNext>Next</button>
+            </div>
           </form>
-        </div>
-      </div>
-    </div>
+        </mat-step>
+        <mat-step errorMessage="Address is required.">
+          <ng-template matStepLabel>Add images</ng-template>
+          <!-- Right Side: Upload Images and Uploaded Images -->
+          <!-- Upload Images -->
+          <div class="card mb-4">
+            <div class="card-header bg-marin text-white">
+              <h5 class="card-title">Upload Images</h5>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="images">Car Images:</label>
+                <input type="file" class="form-control-file" id="images" multiple (change)="onSelectImages($event)">
+                <small class="form-text text-muted">Please upload images of the car.</small>
+              </div>
 
-    <!-- Right Side: Upload Images and Uploaded Images -->
-    <div class="col-md-6">
-      <!-- Upload Images -->
-      <div class="card mb-4">
-        <div class="card-header bg-marin text-white">
-          <h5 class="card-title">Upload Images</h5>
-        </div>
-        <div class="card-body">
-          <div class="form-group">
-            <label for="images">Car Images:</label>
-            <input type="file" class="form-control-file" id="images" multiple (change)="onSelectImages($event)">
-            <small class="form-text text-muted">Please upload images of the car.</small>
+              <!-- Add More Images Button -->
+              <button type="button" mat-stroked-button color="primary" [disabled]="!selectedImages.length"
+                      (click)="onAddMoreImages()">
+                Add More Images
+              </button>
+            </div>
           </div>
 
-          <div class="form-row">
-            <label class="btn btn-success p-0 ">
-                <input type="file" (change)="selectFile($event)" />
-            </label>
-            <div *ngIf="currentFile" class="progress my-3">
-                <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
-                    attr.aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"
-                    [ngStyle]="{ width: progress + '%' }">
-                    {{ progress }}%
+          <!-- Uploaded Images -->
+          <div class="card mb-4">
+            <div class="card-header bg-marin text-white">
+              <h5 class="card-title">Uploaded Images</h5>
             </div>
-    
-            <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
-        </div>
-    </div>
-          
-          <!-- Add More Images Button -->
-          <button type="button" class="btn btn-primary" [disabled]="!selectedImages.length" (click)="onAddMoreImages()">Add More Images</button>
-        </div>
-      </div>
+            <div class="card-body">
+              <div class="row">
 
-      <!-- Uploaded Images -->
-      <div class="card">
-        <div class="card-header bg-marin text-white">
-          <h5 class="card-title">Uploaded Images</h5>
-        </div>
-        <div class="card-body">
-          <div class="row">
-          
-            <div *ngFor="let imageUrl of imageUrls; let i = index" class="col-md-3 mb-3">
-              <div class="card">
-                <div class="card-img-container">
-                  <img [src]="baseURL+imageUrl" class="card-img-top" alt="Car Image">
-                </div>
-                <div class="card-body">
-                  <button type="button" class="btn btn-danger btn-sm" (click)="onDeleteImage(i)">Delete</button>
+                <div *ngFor="let imageUrl of imageUrls; let i = index" class="col-md-3 mb-3">
+                  <div class="card">
+                    <div class="card-img-container">
+                      <img [src]="imageUrl" class="card-img-top" alt="Car Image">
+                    </div>
+                    <div class="card-body">
+                      <button type="button" mat-stroked-button color="warn" (click)="onDeleteImage(i)">
+                        Delete
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+          <div>
+            <button mat-stroked-button color="warn" matStepperPrevious>Back</button>
+            <button mat-stroked-button color="primary" matStepperNext>Next</button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Done</ng-template>
+          <p>You are now done.</p>
+          <div>
+            <button mat-button  color="warn" matStepperPrevious>Back</button>
+            <button mat-button  color="warn" (click)="stepper.reset()">Reset</button>
+            <button mat-button  color="primary" (click)="onSubmit()">Save</button>
+          </div>
+        </mat-step>
+      </mat-stepper>
     </div>
   </div>
-<div class="row">df</div>
-
 </div>

@@ -1,42 +1,37 @@
-import { Injectable } from '@angular/core';
-const USER_KEY = 'auth-user';
+import {Injectable} from '@angular/core';
+import CONST from "../../../helpers/CONST";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
+  authToken = '';
+  authUser = {}
 
-  constructor() { }
-//StorageService manages user information 
-//(username, email, roles)
-// inside Browser’s Session Storage. For Logout, we will clear this Session Storage.
-
-
-  clean(): void {
-    window.sessionStorage.clear();
-  }
-  public saveUser(user: any): void {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
-  }
-  public getUser(): any {
-    const user = window.sessionStorage.getItem(USER_KEY);
-    if (user) {
-      return JSON.parse(user);
-    }
-
-    return {};
+  constructor() {
+    this.authToken = window.localStorage.getItem(CONST.TOKEN) || '';
+    this.authUser = JSON.parse(window.localStorage.getItem(CONST. AUTH_USER)) || {};
   }
 
-  public isLoggedIn(): boolean {
-    const user = window.sessionStorage.getItem(USER_KEY);
-    if (user) {
-      return true;
-    }
-
-    return false;
+  clear(): void {
+    window.localStorage.clear();
   }
 
+  public setAuthToken(token: string): void {
+    this.authToken = token;
+    window.localStorage.setItem(CONST.TOKEN, token);
+  }
 
+  public getAuthToken(): any {
+    return this.authToken;
+  }
 
+  public setAuthUser(user: any): void {
+    this.authUser = user;
+    window.localStorage.setItem(CONST. AUTH_USER, JSON.stringify(user));
+  }
+
+  public getAuthUser(): any {
+    return this.authUser;
+  }
 }

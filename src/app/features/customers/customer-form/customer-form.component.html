@@ -1,0 +1,122 @@
+<div class="az-content az-content-app az-content-contacts pd-b-0">
+  <div class="container">
+    <app-components-sidebar></app-components-sidebar>
+    <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+      <div class="az-content-breadcrumb">
+        <span>Customers</span>
+        <span>List</span>
+      </div>
+      <div class="row justify-content-between mg-b-20">
+        <div class="col-sm-8">
+          <h2 *ngIf="!id; else update" class="az-content-title">Add New Customer</h2>
+          <ng-template #update><h2 class="az-content-title">Edit Customer</h2></ng-template>
+        </div>
+        <div class="col-sm-4 d-flex align-items-center justify-content-end">
+          <button mat-stroked-button color="primary" (click)="onCustomers()">
+            Customers List
+          </button>
+        </div>
+      </div>
+
+      <form (ngSubmit)="onAddCustomer()" [formGroup]="customerForm">
+
+        <div class="form-row mb-3">
+          <mat-form-field class="col full-width">
+            <mat-label>Name</mat-label>
+            <input type="name" matInput formControlName="name" placeholder="Ex. Hayfa"/>
+            <mat-error
+              *ngIf="(customerForm.get('name').invalid && customerForm.get('name').dirty) || customerForm.get('name').hasError('required')">
+              Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col full-width">
+            <mat-label>Birthday</mat-label>
+            <input matInput required formControlName="birthday" [matDatepicker]="birthdayPicker">
+            <mat-datepicker-toggle matIconSuffix [for]="birthdayPicker"></mat-datepicker-toggle>
+            <mat-datepicker #birthdayPicker></mat-datepicker>
+            <mat-error
+              *ngIf="customerForm.get('birthday').invalid && customerForm.get('birthday').dirty && !customerForm.get('birthday').hasError('required')">
+              Please enter a valid birthday
+            </mat-error>
+            <mat-error *ngIf="customerForm.get('birthday').hasError('required')">
+              Birthday is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-row mb-3">
+          <mat-form-field class="full-width col">
+            <mat-label>Email</mat-label>
+            <input type="name" matInput formControlName="email" placeholder="Ex. pat@example.com" required/>
+            <mat-error
+              *ngIf="customerForm.get('email').invalid && customerForm.get('email').dirty && !customerForm.get('email').hasError('required')">
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="customerForm.get('email').hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col full-width">
+            <mat-label>Phone</mat-label>
+            <input matInput placeholder="Phone" formControlName="phone" type="number" name="phone" required/>
+            <mat-error
+              *ngIf="customerForm.get('phone').invalid && customerForm.get('phone').dirty && !customerForm.get('phone').hasError('required')">
+              Phone number must be 8 digits long
+            </mat-error>
+            <mat-error *ngIf="customerForm.get('phone').hasError('required')">
+              Phone is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-row mb-3">
+          <mat-form-field class="col full-width">
+            <mat-label>Driver's License Number</mat-label>
+            <input type="number" required matInput formControlName="licence_number"/>
+            <mat-error
+              *ngIf="customerForm.get('licence_number').invalid && customerForm.get('licence_number').dirty && !customerForm.get('licence_number').hasError('required')">
+              Please provide a licenseNumber
+            </mat-error>
+            <mat-error *ngIf="customerForm.get('licence_number').hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col full-width">
+            <mat-label>Validity Date</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate name="startValidity" formControlName="startValidity" placeholder="Start date">
+              <input matEndDate name="endValidity" formControlName="endValidity" placeholder="End date">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-error
+              *ngIf="customerForm.get('startValidity').hasError('required') || customerForm.get('endValidity').hasError('required')">
+              Validity Date is <strong>required</strong>
+            </mat-error>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+        <div class="form-row mb-3">
+          <div class="col full-width">
+            <input (change)="selectFile($event)" type="file"/>
+            <div *ngIf="currentFile" class="progress my-3">
+              <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                   attr.aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"
+                   [ngStyle]="{ width: progress + '%' }">
+                {{ progress }}%
+              </div>
+
+              <div *ngIf="message" class="alert alert-secondary" role="alert">
+                {{ message }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" color="primary" mat-raised-button [disabled]="!customerForm.valid">
+          Save
+        </button>
+      </form>
+    </div>
+  </div>
+
+</div>

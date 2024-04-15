@@ -4,7 +4,7 @@ export class Customer {
     email:string;
     phone :number;
     image:string;
-    birthay:String;
+    birthday:String;
     licence_number:String
 
     /*

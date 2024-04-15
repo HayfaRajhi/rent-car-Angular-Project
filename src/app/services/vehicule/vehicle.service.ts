@@ -1,41 +1,75 @@
-import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Vehicle } from '../../shared/models/vehicle';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {Inject, Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {Vehicle} from '../../shared/models/vehicle';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
+import {AuthService} from "../auth/auth.service";
+import CONST from "../../../helpers/CONST";
+import {tap, catchError} from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
 export class VehicleService {
 
+  httpOptions = {};
+  snackBarConfig: MatSnackBarConfig = { duration: 3000, verticalPosition: 'top', horizontalPosition: 'right' };
 
-  httpOptions ={
-    headers :new HttpHeaders({
-      'content-Type' :'application/json'
-    })
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthService,
+    private snackBar: MatSnackBar,
+  ) {
+    const authToken = this.authService.getAuthToken();
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`
+      })
+    }
   }
-
-  constructor(private http: HttpClient,@Inject('BaseURL') private baseUrl) { }
 
   getAllVehicles(): Observable<Vehicle[]> {
-    return this.http.get<Vehicle[]>(this.baseUrl+"vehicles");
+    return this.httpClient.get<Vehicle[]>(CONST.API_URL + "/vehicles/all", this.httpOptions);
   }
 
-  getVehicleById(id: number): Observable<Vehicle> {
-    return this.http.get<Vehicle>(this.baseUrl+"vehicles/"+id);
+  getVehicleById(id: string | number): Observable<Vehicle> {
+    return this.httpClient.get<Vehicle>(CONST.API_URL + "/vehicles/" + id, this.httpOptions);
   }
 
   createVehicle(vehicle: Vehicle): Observable<Vehicle> {
-    return this.http.post<Vehicle>(this.baseUrl+"vehicles/edit/"+vehicle.id, vehicle,this.httpOptions);
+    return this.httpClient.post<Vehicle>(CONST.API_URL + "/vehicles/add", vehicle, this.httpOptions).pipe(
+      tap((createdVehicle: Vehicle) => {
+        this.snackBar.open('Vehicle created successfully', 'Close', this.snackBarConfig);
+      }),
+      catchError((error) => {
+        this.snackBar.open('Error creating vehicle', 'Close', this.snackBarConfig);
+        return of(error);
+      })
+    );
   }
 
-  updateVehicle(id:number,vehicle: Vehicle): Observable<Vehicle> {
-    //return this.http.put<Vehicle>(`${this.baseUrl}/${vehicle.id}`, vehicle);
-    return this.http.put<Vehicle>(this.baseUrl+"vehicles/edit/"+id,vehicle,this.httpOptions);
-
+  updateVehicle(id: number, vehicle: Vehicle): Observable<Vehicle> {
+    return this.httpClient.put<Vehicle>(CONST.API_URL + "/vehicles/edit/" + id, vehicle, this.httpOptions).pipe(
+      tap((updatedVehicle: Vehicle) => {
+        this.snackBar.open('Vehicle updated successfully', 'Close', this.snackBarConfig);
+      }),
+      catchError((error) => {
+        this.snackBar.open('Error updating vehicle', 'Close', this.snackBarConfig);
+        return of(error);
+      })
+    );
   }
 
   deleteVehicle(id: number): Observable<any> {
-    //return this.http.delete(`${this.baseUrl}/${id}`);
-    return this.http.delete<any>(this.baseUrl+"vehicles/"+id);
-
-  }}
+    return this.httpClient.delete<any>(CONST.API_URL + "/vehicles/" + id, this.httpOptions).pipe(
+      tap(() => {
+        this.snackBar.open('Vehicle deleted successfully', 'Close', this.snackBarConfig);
+      }),
+      catchError((error) => {
+        this.snackBar.open('Error deleting vehicle', 'Close', this.snackBarConfig);
+        return of(error);
+      })
+    );
+  }
+}
