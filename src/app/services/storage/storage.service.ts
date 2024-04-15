@@ -14,6 +14,8 @@ export class StorageService {
   }
 
   clear(): void {
+    this.authToken = '';
+    this.authUser = {};
     window.localStorage.clear();
   }
 

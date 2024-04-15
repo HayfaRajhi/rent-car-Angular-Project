@@ -16,7 +16,7 @@ import {HomeComponent} from './features/home/home.component';
 
 const routes: Routes = [
   {path: 'home', canActivate: [AuthGuard], component: HomeComponent},
-  {path: '', canActivate: [AuthGuard], component: AppComponent},
+  {path: '', canActivate: [AuthGuard], component: HomeComponent},
 
   {path: 'customers', canActivate: [AuthGuard], component: CustomersListComponent},
   {path: 'customers/edit/:id', canActivate: [AuthGuard], component: CustomerFormComponent},
@@ -33,7 +33,6 @@ const routes: Routes = [
 
   {path: 'signin', component: SigninComponent},
   {path: "**", component: NotfoundComponent},
-  {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 
 @NgModule({
