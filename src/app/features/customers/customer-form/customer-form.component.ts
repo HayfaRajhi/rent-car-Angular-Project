@@ -26,7 +26,7 @@ export class CustomerFormComponent implements OnInit {
     private router: Router,
     private customerService: CustomerService,
     private route: ActivatedRoute,
-    private fileUploadService: FileUploadService
+    //private fileUploadService: FileUploadService
   ) {
     this.route.paramMap.subscribe(result => {
       this.id = result.get('id');
@@ -62,14 +62,14 @@ export class CustomerFormComponent implements OnInit {
     this.customerForm = this.formBuilder.group(
       {
         id: [null],
-        name: ['Test', Validators.required],
-        email: ['test@mail.com', [Validators.required, Validators.email, Validators.pattern("[a-z0-9. %+-]+@[a-z0-9,-]+\.[a-z]{2,4}$")]],
-        birthday: ['12/12/2008', Validators.required],
-        phone: ['12324324', [Validators.required, this.tunisianPhoneNumber]],// Add custom validator for Tunisian phone number
-        licence_number: ['1122324', Validators.required],
-        startValidity: ['12/12/2008', Validators.required],
+        name: ['', Validators.required],
+        email: ['@mail.com', [Validators.required, Validators.email, Validators.pattern("[a-z0-9. %+-]+@[a-z0-9,-]+\.[a-z]{2,4}$")]],
+        birthday: ['', Validators.required],
+        phone: ['', [Validators.required, this.tunisianPhoneNumber]],// Add custom validator for Tunisian phone number
+        licence_number: ['', Validators.required],
+        startValidity: ['', Validators.required],
         //image: ['', Validators.required],
-        endValidity: ['11/11/2009', Validators.required],
+        endValidity: ['', Validators.required],
       }
     )
   }
@@ -82,13 +82,13 @@ export class CustomerFormComponent implements OnInit {
     this.onSubmit().subscribe(
       (customer: Customer) => {
         if (this.router.isActive('/customers/add', true)) {
-          this.upload(customer.id);
+        //  this.upload(customer.id);
         }
-        // this.router.navigate(['/customers/' + customer.id]);
+         this.router.navigate(['/customers/' + customer.id]);
       });
   };
 
-  /*upload file*/
+  /*upload file
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
   }
@@ -128,7 +128,7 @@ export class CustomerFormComponent implements OnInit {
 
       this.selectedFiles = undefined;
     }
-  }
+  }*/
 
   // Custom validator function for Tunisian phone number
   tunisianPhoneNumber(control) {

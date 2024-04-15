@@ -46,7 +46,7 @@ export class CustomerService {
   }
 
   deleteCustomerById(id: number): Observable<any> {
-    return this.httpClient.delete<any>(CONST.API_URL + "customers/" + id, this.httpOptions).pipe(
+    return this.httpClient.delete<any>(CONST.API_URL + "/customers/" + id, this.httpOptions).pipe(
       tap(_ => {
         this.snackBar.open('Customer deleted successfully', 'Close', this.snackBarConfig);
       }),

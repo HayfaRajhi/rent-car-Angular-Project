@@ -77,7 +77,7 @@
               Please provide a licenseNumber
             </mat-error>
             <mat-error *ngIf="customerForm.get('licence_number').hasError('required')">
-              Email is <strong>required</strong>
+              License Number is <strong>required</strong>
             </mat-error>
           </mat-form-field>
           <mat-form-field class="col full-width">
@@ -95,6 +95,7 @@
             <mat-date-range-picker #picker></mat-date-range-picker>
           </mat-form-field>
         </div>
+        <!--
         <div class="form-row mb-3">
           <div class="col full-width">
             <input (change)="selectFile($event)" type="file"/>
@@ -111,7 +112,7 @@
             </div>
           </div>
         </div>
-
+-->
         <button type="submit" color="primary" mat-raised-button [disabled]="!customerForm.valid">
           Save
         </button>

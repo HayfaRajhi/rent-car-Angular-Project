@@ -23,9 +23,9 @@ export class SigninComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.authService.isAuthenticated()) {
+    /*if (this.authService.isAuthenticated()) {
       this.router.navigate(['/']);
-    }
+    }*/
   }
 
   onSubmit(): void {
@@ -40,8 +40,8 @@ export class SigninComponent implements OnInit {
         this.router.navigate(['/customers']);
       },
       error: ({error}) => {
-        console.log('err', error)
-        this.errorMessage = error.error.message;
+        console.log('err !!!', error)
+        this.errorMessage = error;
         this.isLoginFailed = true;
       }
     });
