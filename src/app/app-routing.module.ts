@@ -6,13 +6,12 @@ import {CustomerFormComponent} from './features/customers/customer-form/customer
 import {VehicleAddComponent} from './features/vehicles/vehicle-add/vehicle-add.component';
 import {VehiclesListComponent} from './features/vehicles/vehicles-list/vehicles-list.component';
 import {VehiclesEditComponent} from './features/vehicles/vehicles-edit/vehicles-edit.component';
-import {LocationAddComponent} from './features/locations/location-add/location-add.component';
-import {CarRentalListComponent} from './features/carRental/car-rental-list/car-rental-list.component';
-import {AppComponent} from './app.component';
+import {ReservationFormComponent} from './features/reservations/reservation-form/reservation-form.component';
 import {AuthGuard} from './features/guards/auth.guard';
 import {SigninComponent} from './features/signin/signin/signin.component';
 import {NotfoundComponent} from './features/notfound/notfound.component';
 import {HomeComponent} from './features/home/home.component';
+import {ReservationsListComponent} from "./features/reservations/reservations-list/reservations-list.component";
 
 const routes: Routes = [
   {path: 'home', canActivate: [AuthGuard], component: HomeComponent},
@@ -28,8 +27,10 @@ const routes: Routes = [
   {path: 'vehicles/add', canActivate: [AuthGuard], component: VehicleAddComponent},
   {path: 'vehicles/:id', canActivate: [AuthGuard], component: VehiclesEditComponent}, // Define a route for the vehicle detail component with a parameter ':id'
 
-  {path: 'locations', canActivate: [AuthGuard], component: CarRentalListComponent},
-  {path: 'locations/edit/:id', canActivate: [AuthGuard], component: LocationAddComponent},
+  {path: 'locations', canActivate: [AuthGuard], component: ReservationsListComponent},
+  {path: 'locations/edit/:id', canActivate: [AuthGuard], component: ReservationFormComponent},
+  {path: 'locations/add', canActivate: [AuthGuard], component: ReservationFormComponent},
+  {path: 'locations/:id', canActivate: [AuthGuard], component: ReservationFormComponent},
 
   {path: 'signin', component: SigninComponent},
   {path: "**", component: NotfoundComponent},

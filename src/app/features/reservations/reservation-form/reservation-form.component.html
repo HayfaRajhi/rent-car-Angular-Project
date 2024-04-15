@@ -1,0 +1,100 @@
+<div class="az-content az-content-app az-content-contacts pd-b-0">
+  <div class="container">
+    <app-components-sidebar></app-components-sidebar>
+    <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+      <div class="az-content-breadcrumb">
+        <span>Reservations</span>
+        <span>List</span>
+      </div>
+      <div class="row justify-content-between mg-b-20">
+        <div class="col-sm-8">
+          <h2 *ngIf="!id; else update" class="az-content-title">Add New Reservation</h2>
+          <ng-template #update><h2 class="az-content-title">Edit Reservation</h2></ng-template>
+        </div>
+        <div class="col-sm-4 d-flex align-items-center justify-content-end">
+          <button mat-stroked-button color="primary" (click)="onLocations()">
+            Reservations List
+          </button>
+        </div>
+      </div>
+
+      <form [formGroup]="locationForm">
+        <mat-stepper #stepper>
+          <mat-step [stepControl]="locationForm" errorMessage="Name is required.">
+            <ng-template matStepLabel>Client Information</ng-template>
+            <div class="form-row mb-3">
+              <mat-form-field class="col full-width">
+                <mat-label>Customer</mat-label>
+                <mat-select id="customer" formControlName="customer">
+                  <mat-option *ngFor="let customer of customers" [value]="customer">{{ customer.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="col full-width">
+                <mat-label>Reservation Dates</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate name="startDate" formControlName="startDate" placeholder="Start date">
+                  <input matEndDate name="endDate" formControlName="endDate" placeholder="End date">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                <mat-error
+                  *ngIf="locationForm.get('startDate').hasError('required') || locationForm.get('endDate').hasError('required')">
+                  Validity Date is <strong>required</strong>
+                </mat-error>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+            </div>
+            <div>
+              <button mat-stroked-button color="primary" matStepperNext>Next</button>
+            </div>
+          </mat-step>
+          <mat-step errorMessage="Address is required.">
+            <ng-template matStepLabel>Vehicle Information</ng-template>
+            <div class="form-row">
+              <!-- Vehicle Select -->
+              <mat-form-field class="full-width">
+                <mat-label>Vehicle</mat-label>
+                <mat-select id="vehicle" formControlName="vehicle">
+                  <mat-option *ngFor="let vehicle of vehicles" [value]="vehicle">{{ vehicle.registration }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div>
+              <button mat-stroked-button color="warn" matStepperPrevious>Back</button>
+              <button mat-stroked-button color="primary" matStepperNext>Next</button>
+            </div>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel> Details and Payment Information</ng-template>
+
+            <div class="form-row">
+
+              <!-- Price Per Day Input -->
+              <mat-form-field class="col full-width">
+                <mat-label>Price Per Day</mat-label>
+                <input type="number" matInput formControlName="pricePerDay" [disabled]>
+              </mat-form-field>
+
+              <!-- Total Price (Calculated Field) -->
+              <mat-form-field class="col full-width">
+                <mat-label>Total Price</mat-label>
+                <input matInput type="text" formControlName="totalPrice" [disabled]>
+              </mat-form-field>
+            </div>
+
+
+            <p>You are now done.</p>
+            <div>
+              <button mat-button color="warn" matStepperPrevious>Back</button>
+              <button mat-button color="warn" (click)="stepper.reset()">Reset</button>
+              <button mat-button color="primary" [disabled]="!locationForm.valid" (click)="onSubmit()">Save</button>
+            </div>
+          </mat-step>
+        </mat-stepper>
+      </form>
+
+    </div>
+  </div>
+</div>
+

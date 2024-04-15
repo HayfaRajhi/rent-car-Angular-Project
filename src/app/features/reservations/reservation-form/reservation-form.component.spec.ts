@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LocationAddComponent } from './location-add.component';
+import { ReservationFormComponent } from './reservation-form.component';
 
 describe('LocationAddComponent', () => {
-  let component: LocationAddComponent;
-  let fixture: ComponentFixture<LocationAddComponent>;
+  let component: ReservationFormComponent;
+  let fixture: ComponentFixture<ReservationFormComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LocationAddComponent]
+      declarations: [ReservationFormComponent]
     });
-    fixture = TestBed.createComponent(LocationAddComponent);
+    fixture = TestBed.createComponent(ReservationFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -12,7 +12,6 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
   providedIn: 'root'
 })
 export class CustomerService {
-  customers: Customer[] = CUSTOMERS;
   httpOptions = {};
   snackBarConfig: MatSnackBarConfig = { duration: 3000, verticalPosition: 'top', horizontalPosition: 'right' };
 
@@ -32,7 +31,7 @@ export class CustomerService {
 
   updateCustomer(id: string, customer: Customer): Observable<Customer> {
     return this.httpClient.put<Customer>(CONST.API_URL + "/customers/edit/" + id, customer, this.httpOptions).pipe(
-      tap((updatedCustomer: Customer) => {
+      tap(_ => {
         this.snackBar.open('Customer updated successfully', 'Close', this.snackBarConfig);
       }),
       catchError((error) => {
@@ -50,10 +49,6 @@ export class CustomerService {
     return this.httpClient.delete<any>(CONST.API_URL + "customers/" + id, this.httpOptions).pipe(
       tap(_ => {
         this.snackBar.open('Customer deleted successfully', 'Close', this.snackBarConfig);
-        let index = this.customers.findIndex(customer => customer.id === id);
-        if (index !== -1) {
-          this.customers.splice(index, 1);
-        }
       }),
       catchError(error => {
         this.snackBar.open('Error deleting customer', 'Close', this.snackBarConfig);
@@ -68,8 +63,7 @@ export class CustomerService {
 
   addCustomer(customer: Customer): Observable<Customer> {
     return this.httpClient.post<Customer>(CONST.API_URL + "/customers/add", customer, this.httpOptions).pipe(
-      tap((newCustomer: Customer) => {
-        this.customers.push(newCustomer);
+      tap(_ => {
         this.snackBar.open("Customer added successfully", 'Close', this.snackBarConfig);
       }),
       catchError(error => {

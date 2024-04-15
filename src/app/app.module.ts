@@ -18,11 +18,11 @@ import {VehiclesListComponent} from './features/vehicles/vehicles-list/vehicles-
 import {VehiclesEditComponent} from './features/vehicles/vehicles-edit/vehicles-edit.component';
 import {FooterComponent} from './shared/components/footer/footer.component';
 import {SidebarComponent} from './shared/components/sidebar/sidebar.component';
-import {LocationAddComponent} from './features/locations/location-add/location-add.component';
+import {ReservationFormComponent} from './features/reservations/reservation-form/reservation-form.component';
 
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatInputModule} from '@angular/material/input';
-import {LocationsListComponent} from './features/locations/locations-list/locations-list.component';
+import {ReservationsListComponent} from './features/reservations/reservations-list/reservations-list.component';
 import {CarRentalListComponent} from './features/carRental/car-rental-list/car-rental-list.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
@@ -50,6 +50,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -65,8 +66,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     VehiclesEditComponent,
     FooterComponent,
     SidebarComponent,
-    LocationAddComponent,
-    LocationsListComponent,
+    ReservationFormComponent,
+    ReservationsListComponent,
     CarRentalListComponent,
     SigninComponent,
     ComponentsSidebarComponent,
@@ -74,24 +75,24 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     ProfileComponent,
     HomeComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatAutocompleteModule,
-    MatInputModule, MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatDialogModule,
-    BrowserAnimationsModule,
-    NgbModule,
-    DataTablesModule, MatButtonModule,
-    MatNativeDateModule,
-    MatSnackBarModule,
-    MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, RouterLink, MatButtonModule, NgIf, NgForOf, MatMenuModule, MatIconModule, MatListModule, MatCardModule, MatDatepickerModule, MatStepperModule, NgOptimizedImage,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatAutocompleteModule,
+        MatInputModule, MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatDialogModule,
+        BrowserAnimationsModule,
+        NgbModule,
+        DataTablesModule, MatButtonModule,
+        MatNativeDateModule,
+        MatSnackBarModule,
+        MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, RouterLink, MatButtonModule, NgIf, NgForOf, MatMenuModule, MatIconModule, MatListModule, MatCardModule, MatDatepickerModule, MatStepperModule, NgOptimizedImage, MatSelectModule,
+    ],
   providers: [
     CustomerService,
     MatDialogModule,

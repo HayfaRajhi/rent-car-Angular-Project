@@ -68,8 +68,16 @@ export class CustomersListComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    if (confirm('Are you sure you want to delete this vehicle?')) {
-      this.customerService.deleteCustomerById(id);
+    if (confirm('Are you sure you want to delete this customer?')) {
+      this.customerService.deleteCustomerById(id).subscribe({
+        next: () => {
+          this.dataSource = new MatTableDataSource(this.dataSource.data.filter(customer => customer.id !== id));
+          this.dataSource.paginator = this.paginator;
+        },
+        error: (error) => {
+          this.errMess = <any>error;
+        }
+      });
     }
   }
 

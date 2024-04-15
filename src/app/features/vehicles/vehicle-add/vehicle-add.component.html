@@ -22,7 +22,6 @@
         <mat-step [stepControl]="carForm" errorMessage="Name is required.">
           <form [formGroup]="carForm">
             <ng-template matStepLabel>Fill out car data</ng-template>
-
             <div class="form-row mb-3">
               <!--model-->
               <mat-form-field class="col full-width">
@@ -53,13 +52,13 @@
               <!-- Type -->
               <mat-form-field class="col full-width">
                 <mat-label>Type</mat-label>
-                <select matNativeControl id="type" formControlName="type">
-                  <option value="">Select type</option>
-                  <option value="Luxury Cars">Luxury Cars</option>
-                  <option value="Sports Cars">Sports Cars</option>
-                  <option value="Convertibles">Convertibles</option>
-                  <option value="Compact Cars">Compact Cars</option>
-                </select>
+                <mat-select id="type" formControlName="type" >
+                  <mat-option value="">Select type</mat-option>
+                  <mat-option value="Luxury Cars">Luxury Cars</mat-option>
+                  <mat-option value="Sports Cars">Sports Cars</mat-option>
+                  <mat-option value="Convertibles">Convertibles</mat-option>
+                  <mat-option value="Compact Cars">Compact Cars</mat-option>
+                </mat-select>
                 <mat-error *ngIf="carForm.get('type').invalid && carForm.get('type').dirty">
                   Type is required
                 </mat-error>
@@ -97,11 +96,11 @@
               <!--status-->
               <mat-form-field class="col full-width">
                 <mat-label>Status</mat-label>
-                <select matNativeControl id="status" formControlName="status">
-                  <option value="">Select Status</option>
-                  <option value="Available">Available</option>
-                  <option value="Rent">Rent</option>
-                </select>
+                <mat-select id="status" formControlName="status" >
+                  <mat-option value="">Select Status</mat-option>
+                  <mat-option value="Available">Available</mat-option>
+                  <mat-option value="Rent">Rent</mat-option>
+                </mat-select>
                 <mat-error
                   *ngIf="(carForm.get('status').invalid && carForm.get('status').dirty) || carForm.get('status').hasError('required')">
                   Status is required
@@ -122,12 +121,12 @@
               <!-- Color -->
               <mat-form-field class="col full-width">
                 <mat-label>Color</mat-label>
-                <select matNativeControl id="color" formControlName="color">
-                  <option value="">Select color</option>
-                  <option value="red">Red</option>
-                  <option value="black">Black</option>
-                  <option value="white">White</option>
-                </select>
+                <mat-select id="color" formControlName="status" >
+                  <mat-option value="">Select Color</mat-option>
+                  <mat-option value="red">Red</mat-option>
+                  <mat-option value="black">Black</mat-option>
+                  <mat-option value="white">White</mat-option>
+                </mat-select>
                 <mat-error
                   *ngIf="(carForm.get('color').invalid && carForm.get('color').dirty) || carForm.get('color').hasError('required')">
                   Color is required
