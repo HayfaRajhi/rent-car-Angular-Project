@@ -47,7 +47,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatCardModule} from "@angular/material/card";
 import {AddCustomerComponent} from "./features/customers/modals/add/add.modal.component";
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
+import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatSelectModule} from "@angular/material/select";
@@ -75,7 +75,7 @@ import {MatSelectModule} from "@angular/material/select";
     ProfileComponent,
     HomeComponent
   ],
-    imports: [
+  imports: [
         BrowserModule,
         AppRoutingModule,
         FormsModule,
@@ -96,6 +96,7 @@ import {MatSelectModule} from "@angular/material/select";
   providers: [
     CustomerService,
     MatDialogModule,
+    {provide: MAT_DATE_LOCALE, useValue: 'en-Us'},
     {provide: 'BaseURL', useValue: BaseURL},
     httpInterceptorProviders
   ],

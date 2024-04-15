@@ -2,6 +2,7 @@ import {HttpClient, HttpEvent, HttpHeaders, HttpRequest} from '@angular/common/h
 import {Inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {AuthService} from "./auth/auth.service";
+import CONST from "../../helpers/CONST";
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ export class FileUploadService {
 
     formData.append('file', fileToUpload);
 
-    const req = new HttpRequest('POST', `${this.baseUrl}api/upload/${type}/${id}`, formData, this.httpOptions);
+    const req = new HttpRequest('POST', `${CONST.API_URL}/upload/${type}/${id}`, formData, this.httpOptions);
     return this.http.request(req);
   }
 

@@ -84,4 +84,8 @@ export class VehiclesListComponent implements OnInit {
   onAdd() {
     this.router.navigateByUrl('/vehicles/add');
   }
+
+  transformDate(date: string): string {
+    return (new Date(date)).toLocaleDateString('sv-SE');
+  }
 }

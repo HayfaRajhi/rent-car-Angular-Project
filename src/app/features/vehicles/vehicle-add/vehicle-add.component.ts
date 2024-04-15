@@ -116,19 +116,7 @@ export class VehicleAddComponent implements OnInit {
   }
 
   // Method to handle form submission
-  onSubmit() {
-    // If form is valid, proceed with form submission
-    /*if (this.carForm.valid) {
-
-      // Perform submission logic here
-      console.log('Form submitted successfully');
-    } else {
-      // Mark all fields as touched to display validation messages
-      this.carForm.markAllAsTouched();
-    }*/
-
-
-    if (this.router.isActive('/vehicles/add', true)) {
+  onSubmit() {if (this.router.isActive('/vehicles/add', true)) {
       this.addNewVehicle();
     } else {
       this.updateVehicle();
@@ -144,7 +132,6 @@ export class VehicleAddComponent implements OnInit {
       }
     )
   }
-
 
   updateVehicle(): void {
     const formData = {...this.carForm.value, images: this.imageUrls};
@@ -192,10 +179,10 @@ export class VehicleAddComponent implements OnInit {
     console.log("in the upload id is :" + id)
     this.progress = 0;
 
-    if (this.selectedFiles.length) {
-      const file: File | null = this.selectedFiles.item(0);
+    if (this.selectedImages.length) {
+      const file: File | null = this.selectedImages[0];
 
-      if (file) {
+      if (!!file) {
         this.currentFile = file;
 
         this.fileUploadService.upload(this.currentFile, id, "Vehicle").subscribe({

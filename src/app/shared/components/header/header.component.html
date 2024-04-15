@@ -10,64 +10,20 @@
         <a href="#" (click)="toggleHeaderMenu($event)" class="close">&times;</a>
       </div><!-- az-header-menu-header -->
       <ul class="nav">
-        <li class="nav-item" ngbDropdown [ngClass]="{ 'active': dashboard.isActive }">
-          <a routerLink="/customers" routerLinkActive="active" #dashboard="routerLinkActive" class="nav-link">
-            <i class="typcn typcn-chart-area-outline"></i> Customers
+        <li class="nav-item" [ngClass]="{ 'active': customers.isActive }">
+          <a routerLink="/customers" routerLinkActive="active" #customers="routerLinkActive" class="nav-link ">
+            <mat-icon>group</mat-icon> Customers
           </a>
         </li>
-        <li class="nav-item" ngbDropdown>
-          <a routerLink="/vehicles" routerLinkActive="active" #dashboard="routerLinkActive" class="nav-link">
-            <i class="typcn typcn-chart-area-outline"></i> Vehicles
+        <li class="nav-item" [ngClass]="{ 'active': vehicles.isActive }">
+          <a routerLink="/vehicles" routerLinkActive="active" #vehicles="routerLinkActive" class="nav-link">
+            <mat-icon>toys</mat-icon> Vehicles
           </a>
         </li>
-        <li class="nav-item" ngbDropdown>
-          <a class="nav-link with-sub" id="pagesDropdown" ngbDropdownToggle><i class="typcn typcn-document"></i>
-            Pages</a>
-          <nav class="az-menu-sub" ngbDropdownMenu aria-labelledby="pagesDropdown">
-            <a routerLink="/general-pages/signin" class="nav-link">Sign In</a>
-            <a routerLink="/general-pages/signup" class="nav-link">Sign Up</a>
-          </nav>
-        </li>
-        <li class="nav-item dropdown-mega" ngbDropdown
-            [ngClass]="{'active':  buttons.isActive ||  dropdown.isActive || icons.isActive }">
-          <a class="nav-link with-sub" id="componentsDropdown" ngbDropdownToggle><i class="typcn typcn-book"></i>
-            Components</a>
-          <div class="az-menu-sub az-menu-sub-mega" ngbDropdownMenu aria-labelledby="componentsDropdown">
-            <div class="container">
-              <div>
-                <nav class="nav">
-                  <span>UI Elements</span>
-                  <a routerLink="/ui-elements/buttons" routerLinkActive="active" #buttons="routerLinkActive"
-                     class="nav-link">Buttons</a>
-                  <a routerLink="/ui-elements/dropdown" routerLinkActive="active" #dropdown="routerLinkActive"
-                     class="nav-link">Dropdown</a>
-                  <a routerLink="/ui-elements/icons" routerLinkActive="active" #icons="routerLinkActive"
-                     class="nav-link">Icons</a>
-                </nav>
-              </div>
-              <div>
-                <nav class="nav">
-                  <span>Forms</span>
-                  <a routerLink="/form/form-elements" routerLinkActive="active" #formElements="routerLinkActive"
-                     class="nav-link">Form Elements</a>
-                </nav>
-              </div>
-              <div>
-                <nav class="nav">
-                  <span>Charts</span>
-                  <a routerLink="/charts/chartjs" routerLinkActive="active" #chartjs="routerLinkActive"
-                     class="nav-link">ChartJS</a>
-                </nav>
-              </div>
-              <div>
-                <nav class="nav">
-                  <span>Tables</span>
-                  <a routerLink="/tables/basic-tables" routerLinkActive="active" #basicTables="routerLinkActive"
-                     class="nav-link">Basic Tables</a>
-                </nav>
-              </div>
-            </div><!-- container -->
-          </div>
+        <li class="nav-item" [ngClass]="{ 'active': locations.isActive }">
+          <a routerLink="/locations" routerLinkActive="active" #locations="routerLinkActive" class="nav-link">
+            <mat-icon>app_registration</mat-icon> Reservations
+          </a>
         </li>
       </ul>
     </div><!-- az-header-menu -->

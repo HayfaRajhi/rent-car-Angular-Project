@@ -12,6 +12,7 @@
         </div>
       </div>
 
+      <div  class="bd rounded-5 pb-2">
       <mat-form-field class="full-width">
         <mat-label>Search</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. BMW" #input>
@@ -102,6 +103,7 @@
       <mat-divider></mat-divider>
 
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
       <div *ngIf="isWaiting" class="text-center">
         <div class="spinner-border" role="status"></div>
         <h4>Loading ... please wait !</h4>

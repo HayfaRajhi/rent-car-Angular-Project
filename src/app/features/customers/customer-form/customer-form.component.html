@@ -18,7 +18,7 @@
         </div>
       </div>
 
-      <form (ngSubmit)="onAddCustomer()" [formGroup]="customerForm">
+      <form class="bd rounded-5 p-2" (ngSubmit)="onAddCustomer()" [formGroup]="customerForm">
 
         <div class="form-row mb-3">
           <mat-form-field class="col full-width">
@@ -113,9 +113,11 @@
           </div>
         </div>
 -->
-        <button type="submit" color="primary" mat-raised-button [disabled]="!customerForm.valid">
-          Save
-        </button>
+        <div  class="d-flex flex-row justify-content-center gap">
+          <button type="submit" color="primary" mat-raised-button [disabled]="!customerForm.valid">
+            Save
+          </button>
+        </div>
       </form>
     </div>
   </div>

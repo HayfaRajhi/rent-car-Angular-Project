@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div *ngIf="dataSource?.data?.length>0; else noCustomers">
+      <div *ngIf="dataSource?.data?.length>0; else noCustomers" class="bd rounded-5 pb-2">
         <mat-form-field class="full-width">
           <mat-label>Search</mat-label>
           <input matInput (keyup)="applyFilter($event)" placeholder="Ex. BMW" #input>
@@ -43,14 +43,14 @@
           <!-- Fruit Column <mat-text-column name="score"></mat-text-column> -->
 
           <ng-container matColumnDef="registration">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Registration No</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Registration</th>
             <td mat-cell *matCellDef="let row"> {{ row.registration }}</td>
           </ng-container>
 
           <!-- Email Column -->
           <ng-container matColumnDef="dateOfRegistration">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Registration Date</th>
-            <td mat-cell *matCellDef="let row"> {{ row.dateOfRegistration }}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Registered</th>
+            <td mat-cell *matCellDef="let row"> {{ transformDate(row.dateOfRegistration) }}</td>
           </ng-container>
           <!-- Email Column -->
           <ng-container matColumnDef="pricePerDay">
