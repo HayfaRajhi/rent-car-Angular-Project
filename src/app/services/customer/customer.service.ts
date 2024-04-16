@@ -12,22 +12,16 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
   providedIn: 'root'
 })
 export class CustomerService {
-  httpOptions = {};
-  snackBarConfig: MatSnackBarConfig = { duration: 3000, verticalPosition: 'top', horizontalPosition: 'right' };
+  httpOptions = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };  snackBarConfig: MatSnackBarConfig = { duration: 3000, verticalPosition: 'top', horizontalPosition: 'right' };
 
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService,
     private snackBar: MatSnackBar,
-  ) {
-    const authToken = this.authService.getAuthToken();
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authToken}`
-      })
-    }
-  }
+  ) {}
 
   updateCustomer(id: string, customer: Customer): Observable<Customer> {
     return this.httpClient.put<Customer>(CONST.API_URL + "/customers/edit/" + id, customer, this.httpOptions).pipe(

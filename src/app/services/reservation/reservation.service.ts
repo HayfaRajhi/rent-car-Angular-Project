@@ -1,9 +1,8 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {Reservation} from '../../shared/models/location';
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
-import {AuthService} from "../auth/auth.service";
 import {catchError, tap} from "rxjs/operators";
 import CONST from "../../../helpers/CONST";
 
@@ -11,21 +10,17 @@ import CONST from "../../../helpers/CONST";
   providedIn: 'root'
 })
 export class ReservationService {
-  httpOptions = {};
-  snackBarConfig: MatSnackBarConfig = { duration: 3000, verticalPosition: 'top', horizontalPosition: 'right' };
+  httpOptions = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  snackBarConfig: MatSnackBarConfig = {duration: 3000, verticalPosition: 'top', horizontalPosition: 'right'};
 
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService,
     private snackBar: MatSnackBar,
   ) {
-    const authToken = this.authService.getAuthToken();
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authToken}`
-      })
-    }
   }
 
   getAllReservations(): Observable<Reservation[]> {

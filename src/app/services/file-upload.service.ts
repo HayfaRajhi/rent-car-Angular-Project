@@ -37,12 +37,12 @@ export class FileUploadService {
 
     formData.append('file', fileToUpload);
 
-    const req = new HttpRequest('POST', `${CONST.API_URL}/upload/${type}/${id}`, formData, this.httpOptions);
+    const req = new HttpRequest('POST', `${CONST.API_URL}/files/upload/${type}/${id}`, formData, this.httpOptions);
     return this.http.request(req);
   }
 
   getFiles(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/files`);
+    return this.http.get(`${CONST.API_URL}/files/all`);
   }
 
 }
