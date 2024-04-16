@@ -33,7 +33,7 @@
               <mat-form-field class="col full-width">
                 <mat-label>Reservation Dates</mat-label>
                 <mat-date-range-input [rangePicker]="picker">
-                  <input matStartDate name="startDate" formControlName="startDate" placeholder="Start date">
+                  <input matStartDate name="startDate" [min]="minStartDate" formControlName="startDate" placeholder="Start date">
                   <input matEndDate name="endDate" formControlName="endDate" placeholder="End date">
                 </mat-date-range-input>
                 <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>

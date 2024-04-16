@@ -33,7 +33,7 @@ const routes: Routes = [
   {path: 'locations/:id', canActivate: [AuthGuard], component: ReservationFormComponent},
 
   {path: 'signin', component: SigninComponent},
-  {path: "**", component: NotfoundComponent},
+  {path: "**",canActivate: [AuthGuard], component: NotfoundComponent},
 ];
 
 @NgModule({

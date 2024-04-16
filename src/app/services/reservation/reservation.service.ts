@@ -32,7 +32,7 @@ export class ReservationService {
   }
 
   createReservation(location: Reservation): Observable<Reservation> {
-    return this.httpClient.post<Reservation>(CONST.API_URL + "/locations/", location, this.httpOptions).pipe(
+    return this.httpClient.post<Reservation>(CONST.API_URL + "/locations/add", location, this.httpOptions).pipe(
       tap(_ => {
         this.snackBar.open('Reservation created successfully', 'Close', this.snackBarConfig);
       }),

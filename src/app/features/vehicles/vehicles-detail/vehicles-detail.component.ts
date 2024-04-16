@@ -90,7 +90,6 @@ export class VehiclesDetailComponent {
     if (confirm('Are you sure you want to delete this vehicle?')) {
       this.vehicleService.deleteVehicle(this.vehicle.id)
         .subscribe(() => {
-          // Optionally, you can navigate to a different route or show a success message
           this.router.navigate(['/vehicles']);
         });
     }

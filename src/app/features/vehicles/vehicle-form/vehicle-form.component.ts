@@ -93,7 +93,7 @@ export class VehicleFormComponent implements OnInit {
       color: ['red', Validators.required],
       brand: ['Toyota', Validators.required],
       dateOfRegistration: ['2024-04-24T23:00:00.000Z', Validators.required], // You can add additional validation for date if needed
-      pricePerDay: ['234', [Validators.required, Validators.min(0)]],
+      pricePerDay: ['', [Validators.required, Validators.min(0)]],
       //images: ['', Validators.required] // You can add custom validation for file upload
       type: ['Luxury Cars', Validators.required],
     });

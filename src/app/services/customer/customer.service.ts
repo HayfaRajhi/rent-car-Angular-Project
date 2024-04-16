@@ -40,6 +40,8 @@ export class CustomerService {
   }
 
   deleteCustomerById(id: number): Observable<any> {
+    //pipe operator i  used it to chain RxJS operators 
+    //(tap and catchError) for handling success and error cases respectively, 
     return this.httpClient.delete<any>(CONST.API_URL + "/customers/" + id, this.httpOptions).pipe(
       tap(_ => {
         this.snackBar.open('Customer deleted successfully', 'Close', this.snackBarConfig);

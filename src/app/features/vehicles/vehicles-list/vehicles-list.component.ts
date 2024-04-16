@@ -33,15 +33,13 @@ export class VehiclesListComponent implements OnInit {
   errMess: string;
   isWaiting: boolean = true;
 
-  defaultImageUrl = '../../../assets/default-avatar.jpg'; // Provide the path to your default image here
+  defaultImageUrl = '../../../assets/default-avatar.jpg'; 
 
   constructor(
     private router: Router,
     private vehicleService: VehicleService,
     @Inject("BaseURL") public baseURL
-  ) {
-
-  }
+  ) {  }
 
   ngOnInit(): void {
     this.vehicleService.getAllVehicles().subscribe({
@@ -77,7 +75,15 @@ export class VehiclesListComponent implements OnInit {
 
   onDelete(id: number) {
     if (confirm('Are you sure you want to delete this vehicle?')) {
-      this.vehicleService.deleteVehicle(id);
+      this.vehicleService.deleteVehicle(id).subscribe({
+        next: () => {
+          this.dataSource = new MatTableDataSource(this.dataSource.data.filter(vehicle => vehicle.id !== id));
+          this.dataSource.paginator = this.paginator;
+        },
+        error: (error) => {
+          this.errMess = <any>error;
+        }
+      });
     }
   }
 

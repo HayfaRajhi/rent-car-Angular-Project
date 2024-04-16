@@ -2,6 +2,10 @@ import {HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {AuthService} from "../services/auth/auth.service";
 
+
+// interface that intercepts HTTP requests and responses. HttpRequest represents an outgoing HTTP request.
+//adds an authorization header with the JWT token obtained from AuthService, and ensures that credentials (such as cookies) are included in the request when necessary. 
+
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 

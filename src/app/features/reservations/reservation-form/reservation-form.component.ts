@@ -51,7 +51,7 @@ export class ReservationFormComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private formBuilder: FormBuilder,
-    private locationService: ReservationService,
+    private reservationService: ReservationService,
     private customerService: CustomerService,
     private vehicleService: VehicleService,
     private router: Router,
@@ -157,7 +157,7 @@ export class ReservationFormComponent implements OnInit {
   }
 
   private initLocation(id) {
-    this.locationService.getReservationById(id).subscribe(location => {
+    this.reservationService.getReservationById(id).subscribe(location => {
       this.location = location;
       this.locationForm.patchValue(Location);
       console.log(this.location);
@@ -165,17 +165,17 @@ export class ReservationFormComponent implements OnInit {
   }
 
   private addNewLocation(): void {
-    this.locationService.createReservation(this.locationForm.value).subscribe(
+    this.reservationService.createReservation(this.locationForm.value).subscribe(
       location => {
         console.log("locations added Successfully .." + location)
-        this.router.navigate(['/locations/' + location.id]);
+        this.router.navigate(['/locations/']);
       }
     )
   }
 
   private updateLocation(): void {
     const formData = {...this.locationForm.value};
-    this.vehicleService.updateVehicle(this.location.id, formData).subscribe(
+    this.reservationService.updateReservation(this.location.id, formData).subscribe(
       (location) => {
         console.log("locations updated Successfully .." + location)
         this.router.navigate(['/locations/' + location]);
@@ -235,6 +235,7 @@ export class ReservationFormComponent implements OnInit {
     });
     this.filteredCustomers = []; // Clear the filtered list after selecting a customer
   }
+
 
   calculateTotalPrice(): void {
     const startDate = new Date(this.locationForm.get('startDate').value);
