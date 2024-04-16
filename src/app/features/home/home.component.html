@@ -31,8 +31,11 @@
 xg</div>
 </div>-->
 
+
+
 <div class="az-content az-content-app pd-b-0">
   <div class="container">
+
     <div class="az-content-left az-content-left-contacts">
       <div class="az-content-breadcrumb lh-1 mg-b-10">
         <span>Apps &amp; Pages</span>
@@ -41,9 +44,9 @@ xg</div>
       <div id="azInvoiceList" class="az-invoice-list ps">
         <div
           class="media"
-          [ngClass]="{'selected': selectedVehicle.id === vehicle.id}"
+          [ngClass]="{'selected': selectedVehicle?.id === vehicle?.id}"
           (click)="onSelect(vehicle)"
-          *ngFor="let vehicle of vehicles"
+          *ngFor="let vehicle of dataSource"
         >
           <div class="media-icon">
             <img
@@ -102,6 +105,10 @@ xg</div>
               <p class="invoice-info-row">
                 <span>Status:</span>
                 <span>{{ selectedVehicle?.status }}</span>
+              </p>
+              <p class="invoice-info-row">
+                <span class="tx-right tx-uppercase tx-bold tx-inverse">Price Per Day:</span>
+                <span class="tx-primary tx-bold">{{ selectedVehicle?.pricePerDay }} $</span>
               </p>
             </div>
           </div>

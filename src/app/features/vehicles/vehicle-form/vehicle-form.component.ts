@@ -16,21 +16,6 @@ export class VehicleFormComponent implements OnInit {
 
   id: string = null;
 
-  //vehicleForm:FormGroup;
-  vehicle: Vehicle = {
-    id: null,
-    registration: null,
-    brand: null,
-    model: null,
-    //year: null,
-    pricePerDay: null,
-    // images: [],
-    image: null,
-    status: null,
-    dateOfRegistration: null,
-    color: null,
-    type: null
-  };
   selectedImages: File[] = [];
   imageUrls: string[] = []; // Array to store object URLs
   today: string;
@@ -41,7 +26,6 @@ export class VehicleFormComponent implements OnInit {
   currentFile?: File;
   progress = 0;
   message = '';
-
 
   onVehicles() {
     this.router.navigateByUrl('/vehicles')
@@ -66,6 +50,7 @@ export class VehicleFormComponent implements OnInit {
     const date = new Date();
     // Set today's date in the format "YYYY-MM-DD"
     this.today = date.toISOString().split('T')[0];
+
     this.route.paramMap.subscribe(result => {
       this.id = result.get('id');
       if (!this.id) {
@@ -134,14 +119,11 @@ export class VehicleFormComponent implements OnInit {
   }
 
   updateVehicle(): void {
-    const formData = {...this.carForm.value, images: this.imageUrls};
-    this.vehicleService.updateVehicle(this.vehicle.id, formData)
+    // const formData = {...this.carForm.value, images: this.imageUrls};
+    this.vehicleService.updateVehicle(this.id, this.carForm.value)
       .subscribe(
         vehicle => {
-          console.log({vehicle});
-          console.log('Successfully updated  vehicle', vehicle);
-          //this.router.navigate(['/vehicles/' + vehicle.id])
-
+          this.router.navigate(['/vehicles/' + this.id])
         }
       )
   }

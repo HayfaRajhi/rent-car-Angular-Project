@@ -43,7 +43,7 @@ export class VehicleService {
     );
   }
 
-  updateVehicle(id: number, vehicle: Vehicle): Observable<Vehicle> {
+  updateVehicle(id: string | number, vehicle: Vehicle): Observable<Vehicle> {
     return this.httpClient.put<Vehicle>(CONST.API_URL + "/vehicles/edit/" + id, vehicle, this.httpOptions).pipe(
       tap((updatedVehicle: Vehicle) => {
         this.snackBar.open('Vehicle updated successfully', 'Close', this.snackBarConfig);
