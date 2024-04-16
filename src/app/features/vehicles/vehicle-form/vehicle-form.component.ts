@@ -9,10 +9,10 @@ import {Vehicle} from 'src/app/shared/models/vehicle';
 
 @Component({
   selector: 'app-vehicle-add',
-  templateUrl: './vehicle-add.component.html',
-  styleUrls: ['./vehicle-add.component.css']
+  templateUrl: './vehicle-form.component.html',
+  styleUrls: ['./vehicle-form.component.css']
 })
-export class VehicleAddComponent implements OnInit {
+export class VehicleFormComponent implements OnInit {
 
   id: string = null;
 

@@ -12,10 +12,10 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import {CustomerService} from './services/customer/customer.service';
 import {BaseURL} from './shared/baseUrl';
 import {ConfirmationDialogComponent} from './shared/components/confirmation-dialog/confirmation-dialog.component';
-import {VehicleAddComponent} from './features/vehicles/vehicle-add/vehicle-add.component';
+import {VehicleFormComponent} from './features/vehicles/vehicle-form/vehicle-form.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {VehiclesListComponent} from './features/vehicles/vehicles-list/vehicles-list.component';
-import {VehiclesEditComponent} from './features/vehicles/vehicles-edit/vehicles-edit.component';
+import {VehiclesDetailComponent} from './features/vehicles/vehicles-detail/vehicles-detail.component';
 import {FooterComponent} from './shared/components/footer/footer.component';
 import {SidebarComponent} from './shared/components/sidebar/sidebar.component';
 import {ReservationFormComponent} from './features/reservations/reservation-form/reservation-form.component';
@@ -62,9 +62,9 @@ import {SecurePipe} from "./pipes/secure.pipe";
     CustomerFormComponent,
     AddCustomerComponent,
     ConfirmationDialogComponent,
-    VehicleAddComponent,
+    VehicleFormComponent,
     VehiclesListComponent,
-    VehiclesEditComponent,
+    VehiclesDetailComponent,
     FooterComponent,
     SidebarComponent,
     ReservationFormComponent,

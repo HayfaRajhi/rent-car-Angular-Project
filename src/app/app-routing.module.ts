@@ -3,9 +3,9 @@ import {RouterModule, Routes} from '@angular/router';
 import {CustomersListComponent} from './features/customers/customers-list/customers-list.component';
 import {CustomerDetailComponent} from './features/customers/customer-detail/customer-detail.component';
 import {CustomerFormComponent} from './features/customers/customer-form/customer-form.component';
-import {VehicleAddComponent} from './features/vehicles/vehicle-add/vehicle-add.component';
+import {VehicleFormComponent} from './features/vehicles/vehicle-form/vehicle-form.component';
 import {VehiclesListComponent} from './features/vehicles/vehicles-list/vehicles-list.component';
-import {VehiclesEditComponent} from './features/vehicles/vehicles-edit/vehicles-edit.component';
+import {VehiclesDetailComponent} from './features/vehicles/vehicles-detail/vehicles-detail.component';
 import {ReservationFormComponent} from './features/reservations/reservation-form/reservation-form.component';
 import {AuthGuard} from './features/guards/auth.guard';
 import {SigninComponent} from './features/signin/signin/signin.component';
@@ -23,9 +23,9 @@ const routes: Routes = [
   {path: 'customers/:id', canActivate: [AuthGuard], component: CustomerDetailComponent},
 
   {path: 'vehicles', canActivate: [AuthGuard], component: VehiclesListComponent},
-  {path: 'vehicles/edit/:id', canActivate: [AuthGuard], component: VehicleAddComponent},
-  {path: 'vehicles/add', canActivate: [AuthGuard], component: VehicleAddComponent},
-  {path: 'vehicles/:id', canActivate: [AuthGuard], component: VehiclesEditComponent}, // Define a route for the vehicle detail component with a parameter ':id'
+  {path: 'vehicles/edit/:id', canActivate: [AuthGuard], component: VehicleFormComponent},
+  {path: 'vehicles/add', canActivate: [AuthGuard], component: VehicleFormComponent},
+  {path: 'vehicles/:id', canActivate: [AuthGuard], component: VehiclesDetailComponent}, // Define a route for the vehicle detail component with a parameter ':id'
 
   {path: 'locations', canActivate: [AuthGuard], component: ReservationsListComponent},
   {path: 'locations/edit/:id', canActivate: [AuthGuard], component: ReservationFormComponent},

@@ -1,28 +1,25 @@
-import { Component, Inject } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { VehicleService } from 'src/app/services/vehicule/vehicle.service';
-import { Vehicle } from 'src/app/shared/models/vehicle';
+import {Component, Inject} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {VehicleService} from 'src/app/services/vehicule/vehicle.service';
+import {Vehicle} from 'src/app/shared/models/vehicle';
 
 @Component({
   selector: 'app-vehicles-edit',
-  templateUrl: './vehicles-edit.component.html',
-  styleUrls: ['./vehicles-edit.component.css']
+  templateUrl: './vehicles-detail.component.html',
+  styleUrls: ['./vehicles-detail.component.css']
 })
-export class VehiclesEditComponent {
+export class VehiclesDetailComponent {
   vehicle: Vehicle;
-
-
+  idVehicle: any;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private vehicleService: VehicleService,
     @Inject("BaseURL") public baseURL
-  ) { }
+  ) {
+  }
 
-
-  idVehicle: any;
   ngOnInit(): void {
     //  this.getVehicleDetail();
     this.route.paramMap.subscribe(res => {
@@ -31,11 +28,12 @@ export class VehiclesEditComponent {
     // this.customer=this.customerService.getCustomerById(this.idCustomer);
     if (!isNaN(this.idVehicle)) {
 
-      this.vehicleService.getVehicleById(this.idVehicle).subscribe(vehicle => { this.vehicle = vehicle; })
+      this.vehicleService.getVehicleById(this.idVehicle).subscribe(vehicle => {
+        this.vehicle = vehicle;
+      })
       // this.customerService.getCustomerById(this.idCustomer).subscribe((cutomer)=>this.customer=cutomer);
     }
   }
-
 
 
   /* toggleEdit(): void {
@@ -70,7 +68,7 @@ export class VehiclesEditComponent {
   */
     const id = this.route.snapshot.paramMap.get('id');
     this.vehicleService.getVehicleById(id)
-        .subscribe(vehicle => this.vehicle = vehicle);
+      .subscribe(vehicle => this.vehicle = vehicle);
     console.log(this.vehicle)
     /*
       this.route.paramMap.subscribe(result =>{
@@ -82,9 +80,6 @@ export class VehiclesEditComponent {
        .subscribe(vehicle=> {this.vehicle=vehicle;})
      }}*/
   }
-
-
-
 
 
   goBack(): void {
