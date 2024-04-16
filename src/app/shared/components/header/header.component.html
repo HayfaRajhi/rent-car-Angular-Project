@@ -10,6 +10,11 @@
         <a href="#" (click)="toggleHeaderMenu($event)" class="close">&times;</a>
       </div><!-- az-header-menu-header -->
       <ul class="nav">
+        <li class="nav-item" [ngClass]="{ 'active': home.isActive }">
+          <a routerLink="/home" routerLinkActive="active" #home="routerLinkActive" class="nav-link ">
+            <mat-icon>home</mat-icon> Catalog
+          </a>
+        </li>
         <li class="nav-item" [ngClass]="{ 'active': customers.isActive }">
           <a routerLink="/customers" routerLinkActive="active" #customers="routerLinkActive" class="nav-link ">
             <mat-icon>group</mat-icon> Customers

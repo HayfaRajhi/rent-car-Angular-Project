@@ -1,1 +1,114 @@
-<p>home works!</p>
+<!--<div class="card-deck">
+  <div class="card rounded-10">
+    <div class="card-body">
+      <h5 class="card-title">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
+        Customers
+      </h5>
+      <p class="card-text">{{ customerCount }}</p>
+    </div>
+  </div>
+
+  <div class="card rounded-10">
+    <div class="card-body">
+      <h5 class="card-title">
+        <mat-icon aria-hidden="false" aria-label="Example car icon">directions_car</mat-icon>
+        Vehicles
+      </h5>
+      <p class="card-text">{{ vehicleCount }}</p>
+    </div>
+  </div>
+
+  <div class="card rounded-10">
+    <div class="card-body">
+      <h5 class="card-title">
+        <mat-icon aria-hidden="false" aria-label="Example calendar icon">calendar_today</mat-icon>
+        Reservations
+      </h5>
+      <p class="card-text">{{ reservationCount }}</p>
+    </div>
+  </div>
+xg</div>
+</div>-->
+
+<div class="az-content az-content-app pd-b-0">
+  <div class="container">
+    <div class="az-content-left az-content-left-contacts">
+      <div class="az-content-breadcrumb lh-1 mg-b-10">
+        <span>Apps &amp; Pages</span>
+        <span>Vehicles</span>
+      </div>
+      <div id="azInvoiceList" class="az-invoice-list ps">
+        <div
+          class="media"
+          [ngClass]="{'selected': selectedVehicle.id === vehicle.id}"
+          (click)="onSelect(vehicle)"
+          *ngFor="let vehicle of vehicles"
+        >
+          <div class="media-icon">
+            <img
+              [attr.src]="getVehicleImage(vehicle?.image) | secure | async"
+              alt="Vehicle Image"
+              class="img-fluid rounded-10"
+            />
+          </div>
+          <div class="media-body">
+            <h6><span>{{ vehicle?.brand }} {{ vehicle?.model }}</span>
+              <span>{{ vehicle?.pricePerDay }} $</span></h6>
+            <div><p><span>ID:</span> {{ vehicle?.id }}</p>
+              <p><span>No:</span> {{ vehicle?.registration }}</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="az-content-body az-content-body-contacts">
+      <div class="card card-invoice">
+        <div class="card-body">
+          <div class="invoice-header">
+            <h1 class="invoice-title">Vehicle</h1>
+            <div class="billed-from">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <img
+                [attr.src]="getVehicleImage(selectedVehicle?.image) | secure | async"
+                alt="Vehicle Image"
+                class="img-fluid rounded-10"
+              />
+            </div>
+            <div class="col-md">
+              <label class="tx-gray-600">Vehicle Information</label>
+              <p class="invoice-info-row">
+                <span>Vehicle Model:</span>
+                <span>{{ selectedVehicle?.model }}</span>
+              </p>
+              <p class="invoice-info-row">
+                <span>Vehicle Brand:</span>
+                <span>{{ selectedVehicle?.brand }}</span>
+              </p>
+              <p class="invoice-info-row">
+                <span>Vehicle ID:</span>
+                <span>{{ selectedVehicle?.id }}</span>
+              </p>
+              <p class="invoice-info-row">
+                <span>Registration No:</span>
+                <span>{{ selectedVehicle?.registration }}</span>
+              </p>
+              <p class="invoice-info-row">
+                <span>Registration Date:</span>
+                <span>{{ transformDate(selectedVehicle?.dateOfRegistration) }}</span>
+              </p>
+              <p class="invoice-info-row">
+                <span>Status:</span>
+                <span>{{ selectedVehicle?.status }}</span>
+              </p>
+            </div>
+          </div>
+          <hr class="mg-b-40">
+          <button mat-raised-button color="primary" class="btn-block">Rent Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
