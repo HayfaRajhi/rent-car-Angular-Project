@@ -9,7 +9,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-6">
-                <img [attr.src]=" baseURL+'api/' + vehicle?.image | secure | async" alt="Vehicle Image" class="img-fluid rounded">
+                <img *ngIf="vehicle?.image" [attr.src]=" baseURL+'api/' + vehicle?.image | secure | async" alt="Vehicle Image" class="img-fluid rounded">
               </div>
               <div class="col-md-6">
                 <h5 class="card-title"> Model :{{ vehicle.model }}</h5>
