@@ -1,0 +1,48 @@
+<div class="container mt-5">
+    <div class="row">
+      <!-- Vehicle Details Section -->
+      <div class="col-md-6" *ngIf="!!vehicle">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h5 class="card-title">Vehicle Details</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <img *ngIf="vehicle?.image" [attr.src]=" baseURL+'api/' + vehicle?.image | secure | async" alt="Vehicle Image" class="img-fluid rounded">
+              </div>
+              <div class="col-md-6">
+                <h5 class="card-title"> Model :{{ vehicle.model }}</h5>
+                <p class="card-text text-muted">{{ vehicle.brand }}</p>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Registration: <strong>{{ vehicle.registration }}</strong></li>
+                  <li class="list-group-item">Date of Registration: <strong>{{ vehicle.dateOfRegistration }}</strong></li>
+                  <li class="list-group-item">Status: <strong>{{ vehicle.status }}</strong></li>
+                  <li class="list-group-item">Price Per Day: <strong>{{ vehicle.pricePerDay }}</strong></li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-secondary mr-2" (click)="goBack()">Back</button>
+            <button class="btn btn-primary mr-2" routerLink="/vehicles/edit/{{vehicle.id}}">Edit Vehicle</button>
+
+            <button class="btn btn-danger " (click)="confirmDelete()">Delete Vehicle</button>
+
+          </div>
+        </div>
+      </div>
+      <!-- Image Gallery Section
+      <div class="col-md-6 mt-4 mt-md-0">
+        <h2 class="text-center mb-4">Vehicle Images</h2>
+        <div class="row">
+          <div class="col-md-4 mb-3" *ngFor="let image of vehicle?.image ">
+            <div class="card border-secondary">
+              <img [src]="baseURL + image" class="card-img-top img-fluid rounded" alt="Vehicle Image">
+            </div>
+          </div>
+        </div>
+      </div>-->
+    </div>
+  </div>

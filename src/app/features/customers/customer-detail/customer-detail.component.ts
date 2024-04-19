@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CustomerService } from 'src/app/services/customer.service';
+import { CustomerService } from 'src/app/services/customer/customer.service';
 import { Customer } from 'src/app/shared/models/customer';
 
 @Component({
@@ -44,6 +44,6 @@ throw new Error('Method not implemented.');
   idCustomer :any;
   customer:Customer;
 
-  
+
 }
 

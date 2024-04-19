@@ -1,7 +1,7 @@
 import { Customer } from "./customer";
 import { Vehicle } from "./vehicle";
 
-export interface RentalLocation {
+export interface Reservation {
     id: number; // Unique identifier for the location
     startDate: Date; // Date when the rental starts
     endDate: Date; // Date when the rental ends
@@ -10,5 +10,4 @@ export interface RentalLocation {
     guaranteeType: string; // Type of guarantee for the rental
     rentalFee: number; // Fees associated with the rental
     totalPrice: number;
-
   }

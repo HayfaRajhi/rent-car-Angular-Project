@@ -1,4 +1,69 @@
-<!-- Header for authenticated users -->
+<div class="az-header">
+  <div class="container">
+    <div class="az-header-left">
+      <a routerLink="/" class="az-logo"><span></span> Rent a car</a>
+      <a href="#" id="azMenuShow" (click)="toggleHeaderMenu($event)" class="az-header-menu-icon d-lg-none"><span></span></a>
+    </div><!-- az-header-left -->
+    <div class="az-header-menu">
+      <div class="az-header-menu-header">
+        <a routerLink="/" class="az-logo"><span></span> azia</a>
+        <a href="#" (click)="toggleHeaderMenu($event)" class="close">&times;</a>
+      </div><!-- az-header-menu-header -->
+      <ul class="nav">
+        <li class="nav-item" [ngClass]="{ 'active': home.isActive }">
+          <a routerLink="/home" routerLinkActive="active" #home="routerLinkActive" class="nav-link ">
+            <mat-icon>home</mat-icon> Catalog
+          </a>
+        </li>
+        <li class="nav-item" [ngClass]="{ 'active': customers.isActive }">
+          <a routerLink="/customers" routerLinkActive="active" #customers="routerLinkActive" class="nav-link ">
+            <mat-icon>group</mat-icon> Customers
+          </a>
+        </li>
+        <li class="nav-item" [ngClass]="{ 'active': vehicles.isActive }">
+          <a routerLink="/vehicles" routerLinkActive="active" #vehicles="routerLinkActive" class="nav-link">
+            <mat-icon>toys</mat-icon> Vehicles
+          </a>
+        </li>
+        <li class="nav-item" [ngClass]="{ 'active': locations.isActive }">
+          <a routerLink="/locations" routerLinkActive="active" #locations="routerLinkActive" class="nav-link">
+            <mat-icon>app_registration</mat-icon> Reservations
+          </a>
+        </li>
+      </ul>
+    </div><!-- az-header-menu -->
+    <div class="az-header-right">
+      <div class="dropdown az-profile-menu" ngbDropdown>
+        <a class="az-img-user" id="profileDropdown" ngbDropdownToggle><img src="assets/images/img1.jpg" alt="user"></a>
+        <div class="dropdown-menu" ngbDropdownMenu aria-labelledby="profileDropdown">
+          <div class="az-dropdown-header d-sm-none">
+            <a class="az-header-arrow" (click)="closeMenu($event)"><i class="icon ion-md-arrow-back"></i></a>
+          </div>
+          <div class="az-header-profile">
+            <div class="az-img-user">
+              <img src="assets/images/img1.jpg" alt="">
+            </div><!-- az-img-user -->
+            <h6>hayfa rajhi</h6>
+            <span> Admin</span>
+          </div><!-- az-header-profile -->
+
+          <a routerLink="/general-pages/profile" class="dropdown-item"><i class="typcn typcn-user-outline"></i> My
+            Profile</a>
+          <a routerLink="/general-pages/profile" class="dropdown-item"><i class="typcn typcn-edit"></i> Edit Profile</a>
+          <a routerLink="/general-pages/profile" class="dropdown-item"><i class="typcn typcn-time"></i> Activity
+            Logs</a>
+          <a routerLink="/general-pages/profile" class="dropdown-item"><i class="typcn typcn-cog-outline"></i> Account
+            Settings</a>
+          <button class="dropdown-item" (click)="logout()">
+            <i class="typcn typcn-power-outline"></i> Sign Out
+          </button>
+        </div><!-- dropdown-menu -->
+      </div>
+    </div><!-- az-header-right -->
+  </div><!-- container -->
+</div><!-- az-header -->
+
+<!-- Header for authenticated users
 <ng-container *ngIf="isAuth; else notAuthenticatedHeader">
   <nav class="navbar  navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand " routerLink="/">Rent A Car</a>
@@ -7,9 +72,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <!-- Nav items for authenticated users -->
+        <!-- Nav items for authenticated users
         <li class="nav-item">
-          <a class="nav-link" routerLink="/dashboard" outerLinkActive="active">Dashboard</a>
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/vehicles" outerLinkActive="active">Cars Management</a>
@@ -30,7 +95,7 @@
           </div>
         </li>
       </ul>
-      <!-- Profile Link -->
+      <!-- Profile Link
       <div class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
           <img src="..\..\..\assets\hayfa.jpg" alt="Profile Logo" width="40" height="40">
@@ -45,7 +110,7 @@
 
 </ng-container>
 
-<!-- Header for not authenticated users -->
+<!-- Header for not authenticated users
 <ng-template #notAuthenticatedHeader>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" routerLink="/">Rent A Car</a>
@@ -53,13 +118,14 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <!-- Search form -->
+      <!-- Search form
       <form class="form-inline my-2 my-lg-0 ml-auto">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
       </form>
-      <!-- Sign In Link -->
+      <!-- Sign In Link
       <a class="nav-link" routerLink="/signin">Sign In</a>
     </div>
   </nav>
 </ng-template>
+-->

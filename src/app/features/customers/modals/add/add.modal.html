@@ -1,0 +1,120 @@
+<h2 mat-dialog-title>Add new Customer</h2>
+<form class="example-form" (ngSubmit)="submit" #formControl="ngForm">
+
+<mat-dialog-content>
+
+
+
+
+  <mat-stepper #stepper>
+    <mat-step [stepControl]="firstFormGroup" errorMessage="Name is required.">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Fill out your name</ng-template>
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+        </mat-form-field>
+        <div>
+          <p>Go to a different step to see the error state</p>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" errorMessage="Address is required.">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Fill out your address</ng-template>
+        <mat-form-field>
+          <mat-label>Address</mat-label>
+          <input matInput placeholder="Ex. 1 Main St, New York, NY" formControlName="secondCtrl"
+                 required>
+        </mat-form-field>
+        <div>
+          <p>Go to a different step to see the error state</p>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+
+
+
+
+
+
+
+  <mat-form-field class="example-full-width">
+    <input matInput #input placeholder="Name" [(ngModel)]="data.name" name="name" required/>
+    <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Email" type="email" required [(ngModel)]="data.email" name="email"/>
+    <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput #inputstate placeholder="Phone" [(ngModel)]="data.phone" type="number" name="phone" maxlength="8" required />
+    <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+    <mat-hint align="end">{{inputstate.value?.length || 0}}/8</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput #inputstate placeholder="Driver's license number" [(ngModel)]="data.licence_number" type="number" name="licence_number" maxlength="8" required />
+    <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+    <mat-hint align="end">{{inputstate.value?.length || 0}}/8</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Birthday</mat-label>
+    <input matInput required [(ngModel)]="data.birthday" [matDatepicker]="picker">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Start of Validity</mat-label>
+    <input matInput required [matDatepicker]="picker">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>End of Validity</mat-label>
+    <input matInput required [(ngModel)]="data.birthday" [matDatepicker]="picker">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Image</mat-label>
+    <input matInput readonly type="text" id="fakeFileInput" [(ngModel)]="data.image" (click)="hiddenInput.click()">
+    <input hidden type="file" #hiddenInput (change)="GetFileOnLoad($event)">
+    <mat-icon matSuffix>folder_open</mat-icon>
+  </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button type="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()" tabindex="-1">Save</button>
+</mat-dialog-actions>
+
+
+
+  </form>
+
