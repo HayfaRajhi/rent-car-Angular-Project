@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { StorageService } from 'src/app/services/storage.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from 'src/app/services/auth/auth.service';
+import {StorageService} from 'src/app/services/storage/storage.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-signin',
@@ -8,72 +9,40 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./signin.component.css']
 })
 
-/*
-Login Component also uses AuthService 
-to work with Observable object. 
-Besides that, it calls StorageService methods 
-to check loggedIn status and save User info
- to Session Storage.
-*/
 export class SigninComponent implements OnInit {
   form: any = {
     username: null,
     password: null
   };
-  isLoggedIn = false;
+
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
-  constructor(private authService: AuthService, private storageService: StorageService) { }
+
+  constructor(private authService: AuthService, private storageService: StorageService, private router: Router) {
+  }
+
   ngOnInit(): void {
-    if (this.storageService.isLoggedIn()) {
-      this.isLoggedIn = true;
-      this.roles = this.storageService.getUser().roles;
-    }
+   
   }
 
   onSubmit(): void {
-    const { username, password } = this.form;
-
+    const {username, password} = this.form;
     this.authService.login(username, password).subscribe({
       next: data => {
-        this.storageService.saveUser(data);
+        this.storageService.setAuthToken(data.accessToken);
+        this.storageService.setAuthUser(data.user);
 
+        this.errorMessage = '';
         this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        this.roles = this.storageService.getUser().roles;
-        this.reloadPage();
+        this.router.navigate(['/customers']);
       },
-      error: err => {
-        this.errorMessage = err.error.message;
+      error: ({error}) => {
+        console.log('err !!!', error)
+        this.errorMessage = error;
         this.isLoginFailed = true;
       }
     });
   }
 
-  reloadPage(): void {
-    window.location.reload();
-  }
-
-
-
-
 }
-/*
-  constructor(private authService: AuthService){}
-
-   isAuth:boolean=false; 
-
-ngOnInit(): void {
-      this.isAuth=this.authService.isAuth;
-  }
-  onSignIn():void{
-   this.isAuth= this.authService.signIn();
-  }
-  onSignOut():void{
-    this.isAuth=this.authService.signOut();
-  }
-
-}
-
-*/

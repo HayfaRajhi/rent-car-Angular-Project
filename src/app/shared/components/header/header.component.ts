@@ -1,42 +1,30 @@
-import { Component, EventEmitter, Output, Renderer2 } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
-  isSidebarVisible = false;
-  constructor(private renderer: Renderer2,
-              private authService: AuthService
+  constructor(private authService: AuthService) { }
 
-  ) { }
-
- /* toggleSidebar() {
-    this.isSidebarVisible = !this.isSidebarVisible;
-    if (this.isSidebarVisible) {
-      this.renderer.addClass(document.body, 'sidebar-open');
-      console.log("work")
-    } else {
-      this.renderer.removeClass(document.body, 'sidebar-open');
-    }
-  }*/
-  @Output() sidebarToggled = new EventEmitter<void>();
-
-  toggleSidebar() {
-    this.sidebarToggled.emit();
-    console.log("xs")
+  ngOnInit()  {
   }
-signOut() {
-throw new Error('Method not implemented.');
-}
-  isAuth:boolean;
-  ngOnInit(): void {
-      /*this.authService.authSubject.subscribe(
-        (isAuth:boolean)=>{this.isAuth=isAuth;}
-              )*/
-}
+
+  closeMenu(e) {
+    e.target.closest('.dropdown').classList.remove('show');
+    e.target.closest('.dropdown .dropdown-menu').classList.remove('show');
+  }
+
+  logout() {
+    this.authService.logout()
+  }
+
+  toggleHeaderMenu(event) {
+    event.preventDefault();
+    document.querySelector('body').classList.toggle('az-header-menu-show');
+  }
 
 }

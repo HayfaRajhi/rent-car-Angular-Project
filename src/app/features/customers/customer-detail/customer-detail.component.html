@@ -1,95 +1,86 @@
-<div class="container-fluid bg-secondary md-3">
-    <!-- Header -->
-    <div class="card border-secondary mb-3">
-        <div class="d-flex align-items-center bg-secondary justify-content-between p-3">
-            <!-- Title -->
-            <h1 class="h3 text-white">Customer Details</h1>
-            <!-- Back Button -->
-            <button class="btn btn-md btn-primary" (click)="onBack()">Back</button>
-        </div>
-    </div>
+<div class="az-content az-content-app az-content-contacts pd-b-0">
+  <div class="container">
+    <app-components-sidebar></app-components-sidebar>
 
-    <!-- Main Content -->
-    <div class="row mb-3">
-        <!-- Customer Details -->
-        <div class="col-xl-9">
-            <!-- Customer Card -->
-            <div class="card border-0">
-                <div class="card-header bg-dark text-white">
-                    Customer Information
-                </div>
-                <div class="card-body p-4">
-                    <!-- Customer Image -->
-                    <div class="text-center mb-4">
-                        <img *ngIf=" customer && customer.image" [src]="BaseURL+'api/'+customer.image" alt="Customer Photo" class="img-fluid rounded-circle"
-                            style="width: 150px; height: 150px;">
-                            <img *ngIf="!customer|| !customer.image" [src]="defaultImageUrl" alt="Customer Photo" class="img-fluid rounded-circle"
-                            style="width: 150px; height: 150px;">
-               
-                    </div>
-                    <!-- Customer Info -->
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <p><strong>Name:</strong> {{customer?.name}}</p>
-                            <p><strong>Email:</strong> {{customer?.email}}</p>
-                            <p><strong>Birthday:</strong> {{customer?.birthay}} </p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p><strong>Phone Number:</strong> {{customer?.phone}}</p>
-                            <p><strong>Driver's License:</strong> {{customer?.licence_number}}</p>
-                            <p><strong>License Validity:</strong>empty must be calculated</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+      <div class="az-content-breadcrumb">
+        <span>Customers</span>
+        <span>Details</span>
+      </div>
+      <div class="row justify-content-between mg-b-20">
+        <div class="col-sm-8">
+          <h2 class="az-content-title">{{ customer?.name }} Profile</h2>
 
-        <!-- Statistics -->
-        <div class="col-xl-3">
-            <div class="card border-0">
-                <div class="card-header bg-dark text-white">
-                    Statistics
-                </div>
-                <div class="card-body text-center">
-                    <h4 class="mb-3">Average Time on Site</h4>
-                    <h5 class="mb-1">2m:35s</h5>
-                    <p class="text-success mb-0"><i class="fa fa-arrow-down"></i> +0.8%</p>
-                </div>
-            </div>
         </div>
-    </div>
+        <div class="col-sm-4 d-flex align-items-center justify-content-end">
+          <button mat-stroked-button color="primary" (click)="onCustomers()">
+            Customers List
+          </button>
+        </div>
+      </div>
+      <div class="az-content-body az-content-body-contacts">
 
-    <!-- Location History -->
-    <div class="card border-0">
-        <div class="card-header bg-dark text-white">
-            Location History
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Vehicle</th>
-                            <th scope="col">Registration</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Date of Circulation</th>
-                            <th scope="col" class="text-center">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Mercedes</td>
-                            <td>1425</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="az-contact-info-header">
+          <div class="media">
+            <div class="az-img-user">
+              <img *ngIf=" customer && customer.image" [src]="BaseURL+'api/'+customer.image" alt="Customer Photo">
+              <img *ngIf="!customer|| !customer.image" [src]="defaultImageUrl" alt="Customer Photo">
             </div>
+            <div class="media-body"><h4>{{ customer?.name }}</h4>
+              <p>{{ customer?.birthday }}</p>
+              <!--<nav class="nav">
+                <a href="" class="nav-link">
+                  <i class="typcn typcn-device-phone"></i> Call
+                </a>
+                <a href="" class="nav-link">
+                  <i class="typcn typcn-messages"></i> Message
+                </a>
+                <a href="" class="nav-link">
+                  <i class="typcn typcn-user-add-outline"></i> Add to Group
+                </a>
+                <a href="" class="nav-link">
+                  <i class="typcn typcn-cancel"></i> Block</a>
+              </nav>-->
+            </div>
+          </div>
         </div>
+        <div class="az-contact-info-body">
+          <div class="media-list">
+            <div class="media">
+              <div class="media-icon">
+                <mat-icon>contacts</mat-icon>
+              </div>
+              <div class="media-body">
+                <div><label>Email</label><span
+                  class="tx-medium">{{ customer?.phone }}</span>
+                </div>
+                <div><label>Phone</label><span
+                  class="tx-medium">{{ customer?.phone }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="media">
+              <div class="media-icon">
+                <mat-icon>local_taxi</mat-icon>
+              </div>
+              <div class="media-body">
+                <div><label>Driver's License</label><span
+                  class="tx-medium">{{ customer?.licence_number }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="media">
+              <div class="media-icon">
+                <mat-icon>
+                  published_with_changes
+                </mat-icon>
+              </div>
+              <div class="media-body">
+                <div><label>License Validity</label><span>empty must be calculated</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div>s</div>
-</div>
+  </div>

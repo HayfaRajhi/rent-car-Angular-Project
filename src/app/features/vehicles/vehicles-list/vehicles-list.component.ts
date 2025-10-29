@@ -1,8 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { VehicleService } from 'src/app/services/vehicle.service';
-import { Vehicle } from 'src/app/shared/models/vehicle';
-import { Observable } from 'rxjs';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {VehicleService} from 'src/app/services/vehicule/vehicle.service';
+import {Vehicle} from 'src/app/shared/models/vehicle';
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-vehicles-list',
@@ -11,56 +13,59 @@ import { Observable } from 'rxjs';
 })
 export class VehiclesListComponent implements OnInit {
 
-  errMess:string;
-  isWaiting:boolean=true;
+  displayedColumns: string[] = ['id', 'registration', 'brand', 'model', 'pricePerDay', 'status', 'dateOfRegistration', 'actions'];
+  dataSource: MatTableDataSource<Vehicle>;
 
-  vehicles$: Observable<Vehicle[]>;
-  vehicles: Vehicle[] = [];
-  filteredVehicles: Vehicle[] = [];
-  searchQuery: string = '';
+  @ViewChild(MatPaginator, {static: false})
+  set paginator(value: MatPaginator) {
+    if (this.dataSource) {
+      this.dataSource.paginator = value;
+    }
+  }
 
-  defaultImageUrl = '../../../assets/default-avatar.jpg'; // Provide the path to your default image here
+  @ViewChild(MatSort, {static: false})
+  set sort(value: MatSort) {
+    if (this.dataSource) {
+      this.dataSource.sort = value;
+    }
+  }
 
+  errMess: string;
+  isWaiting: boolean = true;
 
-  constructor(private router: Router, 
+  defaultImageUrl = '../../../assets/default-avatar.jpg'; 
+
+  constructor(
+    private router: Router,
     private vehicleService: VehicleService,
-     @Inject("BaseURL") public baseURL) { }
+    @Inject("BaseURL") public baseURL
+  ) {  }
 
   ngOnInit(): void {
-    this.vehicles$ = this.vehicleService.getAllVehicles();
-    this.vehicleService.getAllVehicles().subscribe({next:(vehicles) => {
-      this.vehicles = vehicles;
-      console.log(vehicles)
-      this.isWaiting=false;
-      this.applyFilter(); // Apply filter when vehicles are loaded
-    
-
-  },
-  error:(errmess)=>{this.vehicles=[];
-    this.errMess=<any>errmess;this.isWaiting=false;
-    console.log('Error fetching vehicles:', this.errMess);},
-    complete:()=> {console.log("complete "+this.isWaiting);}
-  });
+    this.vehicleService.getAllVehicles().subscribe({
+      next: (vehicles) => {
+        this.dataSource = new MatTableDataSource(vehicles);
+        this.dataSource.paginator = this.paginator
+        this.isWaiting = false;
+      },
+      error: (error) => {
+        this.errMess = <any>error;
+        this.isWaiting = false;
+        console.log('Error fetching vehicles:', this.errMess);
+      },
+      complete: () => {
+        console.log("complete " + this.isWaiting);
+      }
+    });
 
   }
-onFilterChange() {
-  console.log('Filter text:', this.searchQuery);
-  this.applyFilter()
-}
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-  
-
-  applyFilter() {
-    if (this.searchQuery.trim() === '') {
-      console.log(this.searchQuery)
-      this.filteredVehicles = this.vehicles; // No search query, display all vehicles
-    } else {
-      this.filteredVehicles = this.vehicles.filter(vehicle =>
-        vehicle.model.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        vehicle.brand.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        vehicle.registration.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
   }
 
@@ -70,28 +75,23 @@ onFilterChange() {
 
   onDelete(id: number) {
     if (confirm('Are you sure you want to delete this vehicle?')) {
-      this.vehicleService.deleteVehicle(id)
-      .subscribe({next:() => {
-      //  this.vehicles$ = this.vehicleService.getAllVehicles();
-        this.isWaiting=false;
-        console.log("Vehicle deleted successfully!");
-        const index = this.vehicles.findIndex(vehicle => vehicle.id === id);
-        if (index !== -1) {
-            this.vehicles.splice(index, 1);
-        }},
-
-
-error:(errmess)=>{this.vehicles=[];
-  this.errMess=<any>errmess;this.isWaiting=false;
-  console.log('Error fetching vehicles:', this.errMess);},
-  complete:()=> {console.log("complete "+this.isWaiting);}
-
+      this.vehicleService.deleteVehicle(id).subscribe({
+        next: () => {
+          this.dataSource = new MatTableDataSource(this.dataSource.data.filter(vehicle => vehicle.id !== id));
+          this.dataSource.paginator = this.paginator;
+        },
+        error: (error) => {
+          this.errMess = <any>error;
+        }
       });
     }
   }
 
-
   onAdd() {
-    this.router.navigateByUrl('/vehicles/edit/-1');
+    this.router.navigateByUrl('/vehicles/add');
+  }
+
+  transformDate(date: string): string {
+    return (new Date(date)).toLocaleDateString('sv-SE');
   }
 }

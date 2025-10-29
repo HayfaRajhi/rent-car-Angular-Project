@@ -7,7 +7,7 @@ export const CUSTOMERS :Customer[]=[
         email:"hayfarajhi@gmail.com",
         phone:1234678,
         image:"../../assets/hayfa.jpg",
-        birthay:"11-13-2001",
+        birthday:"11-13-2001",
         licence_number:'47'
     },
     {
@@ -16,7 +16,7 @@ export const CUSTOMERS :Customer[]=[
         email:"ihebboussida@gmail.com",
         phone:1234678,
         image:"../../assets/default-avatar.jpg",
-        birthay:"05-09-2001",
+        birthday:"05-09-2001",
         licence_number:'80'
 
 

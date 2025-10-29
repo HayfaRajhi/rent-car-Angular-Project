@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocationService } from 'src/app/services/location.service';
-import { RentalLocation } from 'src/app/shared/models/location';
+import { ReservationService } from 'src/app/services/reservation/reservation.service';
+import { Reservation } from 'src/app/shared/models/location';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomerDetailComponent } from '../../customers/customer-detail/customer-detail.component';
 import { Customer } from 'src/app/shared/models/customer';
@@ -13,17 +13,17 @@ import { Customer } from 'src/app/shared/models/customer';
 })
 export class CarRentalListComponent  implements OnInit{
   constructor(private router :Router,
-              private locationService: LocationService,
+              private locationService: ReservationService,
               private dialog: MatDialog){}
 onAdd() {
   this.router.navigateByUrl('/locations/edit/-1');
 
 }
-rentalLocations: RentalLocation[];
+rentalLocations: Reservation[];
 
 
   ngOnInit(): void {
-    this.locationService.getAllLocations().subscribe(
+    this.locationService.getAllReservations().subscribe(
       locations => {
         this.rentalLocations = locations;
       },

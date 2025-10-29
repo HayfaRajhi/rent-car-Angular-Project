@@ -1,17 +1,7 @@
-<!-- app.component.html -->
-
-<app-header></app-header>
-
-<div class="container-fluid">
-  <div  class="row">
-    <nav *ngIf="isAuth" id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar">
-      <app-sidebar></app-sidebar>
-    </nav>
-
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-      <router-outlet></router-outlet>
-    </main>
+<div>
+  <app-header *ngIf="showHeader"></app-header>
+  <div class="az-content-wrapper">
+    <router-outlet></router-outlet>
   </div>
+  <!--<app-footer *ngIf="showFooter"></app-footer>-->
 </div>
-
-<app-footer></app-footer>
